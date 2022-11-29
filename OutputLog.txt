@@ -1,0 +1,12 @@
+267 ms: [OUT] Loading Color: BLUE
+268 ms: [OUT] Loading Color: BROWN
+269 ms: [OUT] Loading Color: GRAY
+270 ms: [OUT] Loading Color: GREEN
+271 ms: [OUT] Loading Color: LGRAY
+272 ms: [OUT] Loading Color: ORANGE
+272 ms: [OUT] Loading Color: PURPLE
+273 ms: [OUT] Loading Color: RED
+275 ms: [OUT] Loading Color: TAN
+277 ms: [OUT] Loading Color: WHITE
+279 ms: [OUT] Loading Color: YELLOW
+282 ms: [OUT] OJAsciiEngine Initialized

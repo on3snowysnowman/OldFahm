@@ -1,0 +1,6 @@
+{
+    "screen height": 540,
+    "screen width": 960,
+    "background color": [15, 15, 40],
+    "color path": "data/colorPallets/ojae_color_pallete.json"
+}
