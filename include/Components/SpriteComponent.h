@@ -12,7 +12,6 @@ struct SpriteComponent : public Component
     
     SpriteComponent()
     {
-        name = "SpriteComponent";
         symbol = ' ';
         color = "WHITE";
         priority = 0;
@@ -20,7 +19,6 @@ struct SpriteComponent : public Component
 
     SpriteComponent(char _symbol, std::string _color, int _priority) 
     {
-        name = "SpriteComponent";
         symbol = _symbol;
         color = _color;
         priority = _priority;
@@ -29,5 +27,10 @@ struct SpriteComponent : public Component
     Component* clone() override
     {
         return new SpriteComponent(symbol, color, priority);
+    }
+
+    static std::string name()
+    {
+        return "SpriteComponent";
     }
 };

@@ -16,20 +16,21 @@ struct ColliderComponent: public Component
      */
     std::unordered_set<std::string> exceptions; 
 
-    ColliderComponent() 
-    {
-        name = "ColliderComponent";
-    }
+    ColliderComponent() {}
 
     ColliderComponent(std::unordered_set<std::string> _exceptions) 
     {
-        name = "ColliderComponent";
         exceptions = _exceptions;
     }
 
     Component* clone() override
     {
         return new ColliderComponent(exceptions);
+    }
+
+    static std::string name()
+    {
+        return "ColliderComponent";
     }
 
     ~ColliderComponent() {}
@@ -40,14 +41,13 @@ struct ColliderComponent: public Component
      * attempting to move here is allowed to do so based on its tags
      * 
      * @param e Entity colliding with this component
-     * @return true if the entity can move
+     * @return true if the entity can move here
      */
-    bool collide(Entity* e)
+    bool collide(std::vector<std::string> entity_tags)
     {
         // Iterate through the target entity's tags
-        for(std::string targ_t : e->tags)
+        for(std::string targ_t : entity_tags)
         {
-            
             // If this tag is present in the exceptions, allow it to
             // traverse over this tile
             if(exceptions.count(targ_t) > 0) return true;

@@ -82,8 +82,8 @@ void TextHandler::draw()
 
         dest.x = it->first.first;
         dest.y = it->first.second - draw_start_position;
-        dest.w = src.w * 2;
-        dest.h = src.h * 2;
+        dest.w = src.w * font_size_multiplier;
+        dest.h = src.h * font_size_multiplier;
 
         texture_handler->draw(character_sprites, src, dest, it->second.color);
     }
@@ -100,9 +100,16 @@ void TextHandler::set_draw_start_position(int _draw_start_position)
     draw_start_position = _draw_start_position;
 }
 
-int TextHandler::get_font_width() { return font_width; }
+void TextHandler::modify_font_multiplier(float delta)
+{
+    font_size_multiplier += delta;
+}
 
-int TextHandler::get_font_height() { return font_height; }
+int TextHandler::get_font_width() { return font_width * font_size_multiplier; }
+
+int TextHandler::get_font_height() { return font_height * font_size_multiplier; }
+
+float TextHandler::get_font_size_multiplier() { return font_size_multiplier; }
 
 bool TextHandler::contains(int c)
 {

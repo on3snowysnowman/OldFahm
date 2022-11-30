@@ -68,7 +68,7 @@ public:
     ~InputHandler();
 
     void update();
-    void set_delay(int i, int frames = 15);
+    void set_delay(int i, int frames = 12);
 
     /**
      * @brief Adds a key to the key map if it is not already present

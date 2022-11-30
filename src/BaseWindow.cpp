@@ -27,6 +27,8 @@ BaseWindow::BaseWindow(TextureHandler* _texture_handler, int _start_x,
     border_selected = texture_handler->load_texture("assets/Sprites/border_selected.png");
     text_handler = new TextHandler(_texture_handler);
 
+    set_cursor_pos(0, 0);
+
     load_font("data/fonts/ojae/ojae_font_data.json");
 }
 
@@ -97,8 +99,8 @@ void BaseWindow::unfocus_window()
 
 void BaseWindow::add_ch(int c, std::string color)
 {
-    int font_width = text_handler->get_font_width() * 2;
-    int font_height = text_handler->get_font_height() * 2;
+    int font_width = text_handler->get_font_width();
+    int font_height = text_handler->get_font_height();
     int window_width = end_x - border_size;
 
     if(c == ' ')
@@ -136,9 +138,9 @@ void BaseWindow::add_ch(int c, std::string color)
 
 void BaseWindow::add_str(std::string _str, std::string color)
 {
-    int font_width = text_handler->get_font_width() * 2;
-    int font_height = text_handler->get_font_height() * 2;
-    int window_width = end_x - border_size;
+    int font_width = text_handler->get_font_width();
+    int font_height = text_handler->get_font_height();
+    int window_width = end_x;
 
     // If the string is larger than the empty space between the cursor x position
     // and the border of the window
@@ -225,7 +227,7 @@ void BaseWindow::add_new_line(int num_new_line)
     if(num_new_line <= 0) { return; }
 
     cursor_x_pos = start_x;
-    cursor_y_pos += ((text_handler->get_font_height() * 2) * 1.5) * 
+    cursor_y_pos += ((text_handler->get_font_height()) * 1.5) * 
         num_new_line;
     // update_draw_position(cursor_y_pos);
 }
@@ -238,11 +240,49 @@ void BaseWindow::clear_content()
     text_handler->clear();
 }
 
+void BaseWindow::set_cursor_pos(int x, int y)
+{
+    // Set them in relation to the start of the window, rather than the start
+    // of the screen
+
+    cursor_x_pos = x + start_x;
+    cursor_y_pos = y + start_y;
+}
+
+void BaseWindow::zoom_in() 
+{
+    float font_size_multiplier = text_handler->get_font_size_multiplier();
+
+    if(font_size_multiplier < 2.0)
+    {
+        text_handler->modify_font_multiplier(0.2);
+    }
+}
+
+void BaseWindow::zoom_out() 
+{
+    float font_size_multiplier = text_handler->get_font_size_multiplier();
+
+    if(font_size_multiplier > 1.0)
+    {
+        text_handler->modify_font_multiplier(-0.2);
+    }
+}
+
 void BaseWindow::update() {}
 
 void BaseWindow::render() 
 {
     draw_border();
+
+    for(Text t : text_to_render)
+    {
+        add_str(t.content, t.color);
+        add_new_line();
+    }
+
+    text_to_render.clear();
+
     text_handler->draw();
 }
 

@@ -7,6 +7,7 @@
 
 #include "TextureHandler.h"
 #include "InputHandler.h"
+#include "Entity.h"
 
 namespace ojae
 {
@@ -37,11 +38,12 @@ protected:
 
     const int FRAME_DELAY = 1000 / TARG_FPS;
 
-    Uint64 frame_start; // TIme stamp of when the current frame started
     int frame_time; // Amount of time the last frame took
 
     int screen_width; // Width of the screen
     int screen_height; // Height of the screen
+
+    Uint64 frame_start; // TIme stamp of when the current frame started
 
     /**
      * @brief Font names to their specified font paths
@@ -66,6 +68,9 @@ protected:
 
     std::vector<int> get_pressed_keys();
     std::vector<int> get_raw_pressed_keys();
+
+    Entity* create_entity(int x_pos, int y_pos, int rendering_priority, 
+        char symbol, std::string name, std::string color, bool add_collider);
 
 private:
 

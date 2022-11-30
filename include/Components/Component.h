@@ -5,11 +5,12 @@ struct Entity;
 struct Component
 {
     Entity* entity = nullptr;
-    std::string name;
 
     Component() {}
 
     virtual Component* clone() { return new Component(); }
+
+    static std::string name() { return "Component"; }
 
     ~Component() {}
 };

@@ -2,6 +2,7 @@
 
 #include "BaseWindow.h"
 #include "../Tilemap.h"
+#include "../Entity.h"
 
 class TilemapWindow : public BaseWindow
 {
@@ -16,8 +17,13 @@ public:
     void update() override;
     void render() override;
 
+    Entity* get_camera();
+
 private:
 
+    int camera_radius;
+
+    Entity* camera;
     Tilemap* tilemap;
 
 };

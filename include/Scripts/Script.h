@@ -22,9 +22,6 @@ struct Script
     virtual Script* clone() 
     { 
         Script* s_clone = new Script();
-
-        s_clone->name = name;
-
         return s_clone; 
     }
 

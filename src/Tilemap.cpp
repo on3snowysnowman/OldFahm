@@ -34,9 +34,9 @@ Tilemap::Tilemap(int _width, int _height)
     height = _height;
 
     Entity* edge_map_collider = new Entity("EDGE MAP COLLIDER");
-    edge_map_collider->add_component(new TransformComponent(0, 0));
-    edge_map_collider->add_component(new SpriteComponent(' ', "WHITE", -1));
-    edge_map_collider->add_component(new ColliderComponent());
+    edge_map_collider->add_component<TransformComponent>(0, 0);
+    edge_map_collider->add_component<SpriteComponent>(' ', "WHITE", -1);
+    edge_map_collider->add_component<ColliderComponent>();
     edge_map_collider->add_tag("NON_TRAVERSABLE");
 
     for(int x = 0; x < width; x++)
@@ -68,16 +68,14 @@ void Tilemap::update()
 
 void Tilemap::add_entity(Entity* e, int x, int y)
 {
-    if(!e->has_component("TransformComponent"))
+    if(!e->has_component<TransformComponent>())
     {
-        e->add_component(new TransformComponent(x, y));
+        e->add_component<TransformComponent>(x, y);
     }
 
     else
     {
-        static_cast<TransformComponent*>(
-            e->get_component("TransformComponent"))->set_position(
-                x, y);
+        e->get_component<TransformComponent>()->set_position(x, y);
     }
     
     entity_handler->add_entity(e, x, y);
@@ -91,7 +89,7 @@ void Tilemap::add_copy_entity(Entity* e, int x, int y)
 
 void Tilemap::remove_entity(Entity* e)
 {
-    if(!e->has_component("TransformComponent"))
+    if(!e->has_component<TransformComponent>())
     {
         Debug::log("[ERR] Tilemap.remove_entity -> Entity does not have"
             "required Transform Component");
@@ -99,7 +97,7 @@ void Tilemap::remove_entity(Entity* e)
     }
 
     TransformComponent* t_component = 
-        static_cast<TransformComponent*>(e->get_component("TransformComponent"));
+        e->get_component<TransformComponent>();
 
     if(!entity_handler->remove_entity(e, t_component->x_pos, 
         t_component->y_pos))
@@ -113,8 +111,7 @@ void Tilemap::remove_entity(Entity* e)
 void Tilemap::fill_tilemap(Entity* e)
 {
     TransformComponent* t_component = 
-        static_cast<TransformComponent*>(e->get_component
-        ("TransformComponent"));
+        e->get_component<TransformComponent>();
 
     int initial_x = t_component->x_pos;
     int initial_y = t_component->y_pos;
@@ -149,7 +146,8 @@ std::vector<DisplayCharacter> Tilemap::get_display(int start_x, int start_y,
                 entity_handler->get_entities_at_position(x, y);
 
             if(entities_at_position.size() == 0 || 
-                !entities_at_position.front()->has_component("SpriteComponent"))
+                !entities_at_position.front()->
+                has_component<SpriteComponent>())
             {
                 visible_characters.push_back(DisplayCharacter(
                     '%', "WHITE" 
@@ -157,11 +155,11 @@ std::vector<DisplayCharacter> Tilemap::get_display(int start_x, int start_y,
                 continue;
             }
 
+
+
             SpriteComponent* s_component = 
-                static_cast<SpriteComponent*>(
-                    entities_at_position.front()->
-                    get_component("SpriteComponent")
-                );
+                entities_at_position.front() ->
+                get_component<SpriteComponent>();
 
             visible_characters.push_back(DisplayCharacter(
                 s_component->symbol, s_component->color

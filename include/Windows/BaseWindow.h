@@ -6,6 +6,7 @@
 
 #include "../TextHandler.h"
 #include "../TextureHandler.h"
+#include "../Text.h"
 
 /**
  * @brief Modular window for displaying text to the screen
@@ -15,6 +16,8 @@ class BaseWindow
 {
 
 public:
+
+    std::vector<Text> text_to_render;
 
     BaseWindow();
     BaseWindow(TextureHandler* _texture_handler, int _start_x, int _start_y,
@@ -30,6 +33,8 @@ public:
     void add_new_line(int num_new_line = 1);
     void clear_content();
     void set_cursor_pos(int x, int y);
+    void zoom_in();
+    void zoom_out();
 
     virtual void update();
     virtual void render();
@@ -59,8 +64,8 @@ protected:
     SDL_Texture* border_selected;
     SDL_Texture* font_texture;
 
-    TextHandler* text_handler;
     TextureHandler* texture_handler;
+    TextHandler* text_handler;
 
     void draw_border();
 

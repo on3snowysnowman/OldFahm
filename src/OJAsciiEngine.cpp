@@ -2,6 +2,9 @@
 #include "Debug.h"
 #include "nlohmann/json.hpp"
 #include "Jloader.h"
+#include "Components/TransformComponent.h"
+#include "Components/SpriteComponent.h"
+#include "Components/ColliderComponent.h"
 
 
 // Constructors / Deconstructor
@@ -137,6 +140,21 @@ std::vector<int> ojae::OJAsciiEngine::get_pressed_keys()
 std::vector<int> ojae::OJAsciiEngine::get_raw_pressed_keys()
 {
     return raw_pressed_keys;
+}
+
+Entity* ojae::OJAsciiEngine::create_entity(int x_pos, int y_pos, int rendering_priority, 
+    char symbol, std::string name, std::string color, bool add_collider)
+{
+    Entity* e = new Entity(name);
+    e->add_component<TransformComponent>(x_pos, y_pos);
+    e->add_component<SpriteComponent>(symbol, color, rendering_priority);
+
+    if(add_collider)
+    {
+        e->add_component<ColliderComponent>();
+    }
+
+    return e;
 }
 
 // Private Members

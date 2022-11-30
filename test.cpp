@@ -1,53 +1,22 @@
-#define SDL_MAIN_HANDLED
-
-#include <vector>
-#include <list>
-#include <SDL2/SDL.h>
 #include <iostream>
+#include <string>
 
-
-class Test
+struct Test
 {
-
+    static std::string name()
+    {
+        return "Test";
+    }
 };
 
 int main()
 {
 
-    std::vector<Test> vec;
-    std::list<Test> lis;
+    Test test_1;
+    Test test_2;
 
-
-    Uint64 init;
-    int elapsed;
-
-    for(int i = 0; i < 10000000; i++)
-    {
-        vec.push_back(Test());
-        lis.push_back(Test());
-    }
-
-    init = SDL_GetTicks64();
-
-    for(Test t : vec)
-    {
-        ;
-    }
-
-    elapsed = SDL_GetTicks64() - init;
-
-    std::cout << "Vector: " << elapsed << '\n';
-
-    init = SDL_GetTicks64();
-
-    for(Test t : lis)
-    {
-        ;
-    }
-
-    elapsed = SDL_GetTicks64() - init;
-
-    std::cout << "List: " << elapsed << '\n';
+    std::cout << test_1.name() << '\n';
+    std::cout << test_2.name();
 
     return 0;
 }

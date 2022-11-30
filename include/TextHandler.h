@@ -38,17 +38,20 @@ public:
     TextHandler(TextureHandler* _texture_handler);
     ~TextHandler();
 
+    bool contains(int c);
+
     void load_font(const char* path);
     void add(int symbol, int x_pos, int y_pos, std::string color);
     void add(DisplayCharacter display_char, int x_pos, int y_pos);
     void draw();
     void clear();
     void set_draw_start_position(int _draw_start_position);
+    void modify_font_multiplier(float delta);
 
     int get_font_width();
     int get_font_height();
-
-    bool contains(int c);
+    
+    float get_font_size_multiplier();
 
 private:
 
@@ -56,6 +59,8 @@ private:
     int font_height;
 
     int draw_start_position = 0;
+
+    float font_size_multiplier = 1;
 
     SDL_Texture* character_sprites;
     std::map<std::string, CharacterID> character_data;
