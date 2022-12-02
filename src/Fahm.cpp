@@ -6,6 +6,8 @@
 #include "Components/AllComponents.h"
 #include "Scripts/AllScripts.h"
 #include "EventQueue.h"
+#include "Random.h"
+#include "CollisionHandler.h"
 
 
 // Constructors / Deconstructor
@@ -25,13 +27,17 @@ void Fahm::start()
 
     loading_screen();
 
-    tilemap = new Tilemap(15, 15);
+    tilemap = new Tilemap(30, 30);
 
     tilemap_window = new TilemapWindow(texture_handler, tilemap, 0, 0, 
         screen_width / 2, screen_height);
     
-    text_window = new BaseWindow(texture_handler, (screen_width / 2) + 1,
-        0, screen_width, screen_height, false);
+    inventory_window = new BaseWindow(texture_handler, (screen_width / 2),
+        0, screen_width, (screen_height * .75), false);
+    text_window = new BaseWindow(texture_handler, (screen_width / 2),
+        (screen_height * .75), screen_width, screen_height, false);
+
+    // Dirt
 
     Entity* dirt = new Entity("Dirt");
     dirt->add_component<TransformComponent>(0, 0);
@@ -39,27 +45,85 @@ void Fahm::start()
     tilemap->add_entity(dirt, 0, 0);
     tilemap->fill_tilemap(dirt);
 
+    // Grass
+
     Entity* grass = new Entity("Grass");
     grass->add_component<TransformComponent>(0, 0);
-    grass->add_component<SpriteComponent>('\'', "GREEN", 1);
+    grass->add_component<SpriteComponent>('~', "GREEN", 1);
     tilemap->add_entity(grass, 0, 0);
     tilemap->fill_tilemap(grass);
 
-    Entity* player = new Entity("Player");
-    player->add_component<TransformComponent>(0, 0);
-    player->add_component<SpriteComponent>('P', "BLUE", 20);
-    player->add_component<ColliderComponent>();
-    player->add_script(new PlayerController(input_handler));
-    player->add_script(new CameraTrack(tilemap_window->get_camera()));
+    // Player
+
+    Entity* player = create_entity(0, 0, 20, 'P', "Player", "BLUE", true);
+    player->add_component<StorageComponent>(30);
+    player->add_script<HarvestPlant>(
+        player->get_component<StorageComponent>());
+    player->add_script<PlayerController>(input_handler);
+    player->add_script<CameraTrack>(tilemap_window->get_camera());
+    player->add_script<DisplayStorage>(&inventory_window->text_to_render,
+        player->get_component<StorageComponent>());
     tilemap->add_entity(player, 3, 3);
+
+    // Tile Reader
 
     Entity* tile_reader = create_entity(0, 0, -1, '%', "Tile Reader", 
         "WHITE", false);
-    tile_reader->add_script(new DisplayEntitiesOnTile(player, 
-        &text_window->text_to_render));
+    tile_reader->add_script<DisplayEntitiesOnTile>(player, 
+        &text_window->text_to_render);
     tilemap->add_entity(tile_reader, 0, 0);
 
+    // Oak Tree
+    Entity* oak_tree = create_entity(0, 0, 10, 'T', "Oak Tree", "BROWN",
+        true);
+    oak_tree->entity_handler = tilemap->get_entity_handler();
+
+    int i = 0;
+
+    while(i < tilemap->get_width())
+    {
+        int x_pos = Random::get_random_num(0, tilemap->get_width());
+        int y_pos = Random::get_random_num(0, tilemap->get_height());
+
+        if(CollisionHandler::is_traversable(oak_tree, x_pos, y_pos))
+        {
+            tilemap->add_entity(oak_tree, x_pos, y_pos);
+            break;
+        }
+
+        i++;
+    }
+
+    int iterations = 0;
+
+    int tilemap_size = pow(tilemap->get_width(), 2);
+    int bound = tilemap_size * 0.05;
+    
+    for(int i = 0; i < bound; i++)
+    {
+        if(iterations >= tilemap_size)
+        {
+            break;
+        }
+
+        int x_pos = Random::get_random_num(0, tilemap->get_width());
+        int y_pos = Random::get_random_num(0, tilemap->get_height());
+
+        if(!CollisionHandler::is_traversable(oak_tree, x_pos, y_pos))
+        {
+            i--;
+            iterations++;
+            continue;
+        }
+
+        iterations++;
+        tilemap->add_copy_entity(oak_tree, x_pos, y_pos);
+    }
+
+    // Wheat
+
     Entity* wheat = create_entity(6, 6, 3, 'W', "Wheat", "YELLOW", false);
+    wheat->add_tag("HARVESTABLE");
     tilemap->add_entity(wheat, 6, 6);
 
     int x = 7; 
@@ -119,8 +183,6 @@ void Fahm::handle_queue_events()
     while(EventQueue::has_events())
     {
         std::string targ_event = EventQueue::pull_event();
-
-        std::cout << "Event Processed: " << targ_event << '\n';
     }
 }
 
@@ -168,6 +230,10 @@ void Fahm::render()
 
     text_window->clear_content();
     text_window->render();
+
+    inventory_window->clear_content();
+    inventory_window->render();
+
     tilemap_window->render();
 
     draw_to_screen();

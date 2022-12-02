@@ -24,11 +24,20 @@ struct DisplayEntitiesOnTile : public Script
 
     DisplayEntitiesOnTile(Entity* _targ_entity, std::vector<Text>* target_text_output)
     {
-        name = "DisplayEntitiesOnTile";
         targ_entity = _targ_entity;
         text_to_render = target_text_output;
     }
 
+    Script* clone() override
+    {
+        return new DisplayEntitiesOnTile(targ_entity, text_to_render);
+    }
+
+    static std::string name()
+    {
+        return "DisplayEntitiesOnTile";
+    }
+    
     void update() override
     {
         TransformComponent* t_comp = targ_entity->get_component

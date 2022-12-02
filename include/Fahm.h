@@ -22,6 +22,7 @@ private:
 
     BaseWindow* full_window;
     BaseWindow* text_window;
+    BaseWindow* inventory_window;
     
     TilemapWindow* tilemap_window;
 

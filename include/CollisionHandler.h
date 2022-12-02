@@ -14,11 +14,13 @@ struct CollisionHandler
         std::list<Entity*> entities =
             e->entity_handler->get_entities_at_position(x, y);
 
-        for(Entity* e : entities)
+        for(std::list<Entity*>::iterator it = entities.begin(); 
+            it != entities.end(); it++)
         {
-            if(e->has_component<ColliderComponent>())
+            if((*it)->has_component<ColliderComponent>())
             {
-                if(!e->get_component<ColliderComponent>()->collide(e->tags))
+
+                if(!(*it)->get_component<ColliderComponent>()->collide(e->tags))
                 {
                     return false;
                 }

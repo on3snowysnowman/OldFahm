@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Script.h"
+#include "HarvestPlant.h"
 #include "../Entity.h"
 #include "../InputHandler.h"
 #include "../CollisionHandler.h"
@@ -14,13 +15,17 @@ struct PlayerController : public Script
 
     PlayerController(InputHandler* _input_handler)
     {
-        name = "PlayerController";
         input_handler = _input_handler;
     }
 
     Script* clone() override
     {
         return new PlayerController(input_handler);
+    }
+
+    static std::string name()
+    {
+        return "PlayerController";
     }
 
     /**
@@ -70,6 +75,7 @@ struct PlayerController : public Script
 
         for(Key* k : input_handler->get_active_keys())
         {
+
             switch(k->id)
             {
                 // Up Arrow
@@ -102,6 +108,19 @@ struct PlayerController : public Script
                     modify_position(t_comp, -(t_comp->x_pos - 1), 
                         -(t_comp->y_pos - 1));
                     input_handler->set_delay(k->id);
+                    break;
+
+                case 'h':
+
+                    if(entity->has_script<HarvestPlant>())
+                    {
+                        HarvestPlant* h_script = entity->get_script<
+                            HarvestPlant>();
+                        h_script->harvest();
+                    }
+
+                    input_handler->set_delay(k->id);
+
                     break;
             }
         }

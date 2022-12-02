@@ -263,7 +263,7 @@ void BaseWindow::zoom_out()
 {
     float font_size_multiplier = text_handler->get_font_size_multiplier();
 
-    if(font_size_multiplier > 1.0)
+    if(font_size_multiplier > 1.2)
     {
         text_handler->modify_font_multiplier(-0.2);
     }

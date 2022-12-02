@@ -10,13 +10,17 @@ struct CameraTrack : public Script
 
     CameraTrack(Entity* _camera)
     {
-        name = "TrackCamera";
         camera = _camera;
     }
 
     Script* clone() override
     {
         return new CameraTrack(camera);
+    }
+
+    static std::string name()
+    {
+        return "CameraTrack";
     }
 
     void update() override

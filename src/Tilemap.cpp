@@ -35,7 +35,7 @@ Tilemap::Tilemap(int _width, int _height)
 
     Entity* edge_map_collider = new Entity("EDGE MAP COLLIDER");
     edge_map_collider->add_component<TransformComponent>(0, 0);
-    edge_map_collider->add_component<SpriteComponent>(' ', "WHITE", -1);
+    edge_map_collider->add_component<SpriteComponent>('S', "LGRAY", 5);
     edge_map_collider->add_component<ColliderComponent>();
     edge_map_collider->add_tag("NON_TRAVERSABLE");
 

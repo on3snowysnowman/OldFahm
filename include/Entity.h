@@ -48,12 +48,9 @@ struct Entity
 
     std::map<std::string, Component*> components;
 
-    // std::vector<Component*> components;
-    // std::unordered_set<std::string> component_names;
-
     std::vector<Script*> scripts;
     std::unordered_set<std::string> script_names;
-    
+
     EntityHandler* entity_handler = nullptr;
 
     Entity() {}
@@ -95,7 +92,7 @@ struct Entity
             Script* copy_s = s->clone();
 
             scripts.push_back(copy_s);
-            script_names.emplace(copy_s->name);
+            script_names.emplace(copy_s->name());
         }
 
     }
@@ -115,9 +112,10 @@ struct Entity
         }
     }
 
-    bool has_script(std::string script_name)
+    template<typename T>
+    bool has_script()
     {
-        return script_names.count(script_name);
+        return script_names.count(T::name());
     }
 
     template<typename T>
@@ -142,22 +140,24 @@ struct Entity
         }
     }
 
-    void add_script(Script* s)
+    template <typename T, typename... TArgs>
+    void add_script(TArgs&&... mArgs)
     {
+        Script* new_script(new T(std::forward<TArgs>(mArgs)...));
 
-        if(script_names.count(s->name) == 1)
+        if(script_names.count(T::name()) == 1)
         {
             std::string message = "[WAR] Attempted to attach script: "
-                + s->name + " to entity: " + name + ", when an identical"
+                + T::name() + " to entity: " + name + ", when an identical"
                 " script already exists";
             Debug::log(message);
             return;
         }
 
-        scripts.push_back(s);
-        script_names.emplace(s->name);
+        new_script->entity = this;
+        script_names.emplace(T::name());
 
-        s->entity = this;
+        scripts.push_back(new_script);
 
         if(scripts.size() == 1) 
         {
@@ -165,20 +165,15 @@ struct Entity
         }
     }
 
-    // void add_component(Component* c)
-    // {
-    //     if(components.count(c->name) == 1)
-    //     {
-    //         std::string message = "[WAR] Attempted to attach component: "
-    //             + c->name + " to entity: " + name + ", when an identical"
-    //             " component already exists";
-    //         Debug::log(message);
-    //         return;
-    //     }
+    std::string get_tag(std::string _tag)
+    {
+        for(std::string t : tags)
+        {
+            if(t == _tag) return t;
+        }
 
-    //     components.push_back(c);
-    //     component_names.emplace(c->name);
-    // }
+        return std::string{};
+    }
 
     template <typename T, typename... TArgs>
     T* add_component(TArgs&&... mArgs)
@@ -190,33 +185,46 @@ struct Entity
         return new_comp;
     }
 
-    Script* get_script(std::string script_name) 
+    template<typename T>
+    T* get_script() 
     {
+        std::string script_name = T::name();
+
         if(script_names.count(script_name) == 0)
         {
+            DEBUG_MESSAGE:
+
             std::string message = "[WAR] Entity.get_script -> Attempted to get"
                 " script: " + script_name + " from entity: " + name + 
-                ", when no matching script exists";
+                ", when no matching script was found";
             Debug::log(message);
             return nullptr;
         }
 
         for(Script* s : scripts)
         {
-            if(s->name == script_name)
+            T* s_cast = dynamic_cast<T*>(s);
+
+            if(s_cast != nullptr)
             {
-                return s;
+                return s_cast;
             }
         }
+
+        goto DEBUG_MESSAGE;
 
         return nullptr;
     }
 
-    Script* remove_script(std::string script_name)
+    template<typename T>
+    T* remove_script()
     {
+        std::string script_name = T::name();
 
         if(script_names.count(script_name) == 0)
         {
+            DEBUG_MESSAGE:
+
             std::string message = "[WAR] Attempted to delete script: " 
             + script_name + " from entity: " + name + ", but no script"
             " with that name was found";
@@ -229,20 +237,33 @@ struct Entity
         
         for(int i = 0; i < scripts.size(); i++)
         {
-            if(scripts.at(i)->name == script_name)
+            Script* s_cast = dynamic_cast<T*>(scripts.at(i));
+
+            script_name.erase(T::name());
+
+            if(s_cast != nullptr)
             {
-                Script* targ_script = scripts.at(i);
-
                 scripts.erase(scripts.begin() + i);
-
-                if(scripts.size() == 0)
-                {
-                    EntityTracker::remove_entity(this);
-                }
-
-                return targ_script;
+                return s_cast;
             }
         }
+
+        // for(int i = 0; i < scripts.size(); i++)
+        // {
+        //     if(scripts.at(i)->name() == script_name)
+        //     {
+        //         Script* targ_script = scripts.at(i);
+
+        //         scripts.erase(scripts.begin() + i);
+
+        //         if(scripts.size() == 0)
+        //         {
+        //             EntityTracker::remove_entity(this);
+        //         }
+
+        //         return static_cast<T*>(targ_script);
+        //     }
+        // }
     
         return nullptr;
     }
@@ -264,32 +285,7 @@ struct Entity
 
         return static_cast<T*>(components.at(c_name));
     }
-
-    // Component* get_component(std::string component_name) 
-    // {
-    //     if(component_names.count(component_name) == 0)
-    //     {
-    //         std::string message = "[WAR] Entity.get_component -> Attempted to get"
-    //             " component: " + component_name + " from entity: " + name + 
-    //             ", when no matching component exists";
-    //         Debug::log(message);
-    //         return nullptr;
-    //     }
-
-    //     for(Component* c : components)
-    //     {
-    //         if(c->name == component_name)
-    //         {
-    //             return c;
-    //         }
-    //     }
-
-    //     return nullptr;
-    // }
-
-    // template<typename T>
-    // Component* get_component()
-
+    
     template<typename T>
     T* remove_component()
     {
@@ -348,7 +344,11 @@ private:
 
 public:
 
-    EntityHandler() {}
+    EntityHandler() 
+    {
+        width = 0; 
+        height = 0;
+    }
 
     EntityHandler(int _width, int _height)
     {
@@ -372,8 +372,9 @@ public:
     {
         for(Entity* e : EntityTracker::entities)
         {
+
             for(Script* s : e->scripts)
-            {
+            {   
                 s->update();
             }
         }

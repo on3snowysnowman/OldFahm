@@ -60,7 +60,7 @@ private:
 
     int draw_start_position = 0;
 
-    float font_size_multiplier = 1;
+    float font_size_multiplier = 2.0;
 
     SDL_Texture* character_sprites;
     std::map<std::string, CharacterID> character_data;

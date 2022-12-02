@@ -11,7 +11,6 @@ struct Entity;
 struct Script
 {
 
-    std::string name;
     Entity* entity = nullptr;
 
     Script() 
@@ -23,6 +22,11 @@ struct Script
     { 
         Script* s_clone = new Script();
         return s_clone; 
+    }
+
+    static std::string name()
+    {
+        return "Script";
     }
 
     ~Script() {}
