@@ -26,6 +26,11 @@
 },
 {
   "directory": "C:/Users/on3sn/Desktop/Fahm/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Users/on3sn/Desktop/Fahm/include -IC:/Users/on3sn/Desktop/Fahm/src -isystem C:/msys64/mingw64/include/SDL2 -O3 -g -o CMakeFiles\\Fahm.dir\\src\\Menu.cpp.obj -c C:\\Users\\on3sn\\Desktop\\Fahm\\src\\Menu.cpp",
+  "file": "C:\\Users\\on3sn\\Desktop\\Fahm\\src\\Menu.cpp"
+},
+{
+  "directory": "C:/Users/on3sn/Desktop/Fahm/build",
   "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Users/on3sn/Desktop/Fahm/include -IC:/Users/on3sn/Desktop/Fahm/src -isystem C:/msys64/mingw64/include/SDL2 -O3 -g -o CMakeFiles\\Fahm.dir\\src\\OJAsciiEngine.cpp.obj -c C:\\Users\\on3sn\\Desktop\\Fahm\\src\\OJAsciiEngine.cpp",
   "file": "C:\\Users\\on3sn\\Desktop\\Fahm\\src\\OJAsciiEngine.cpp"
 },

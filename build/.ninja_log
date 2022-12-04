@@ -1,9 +1,5 @@
 # ninja log v5
-27	2158	6913649674728094	CMakeFiles/Fahm.dir/src/TextureHandler.cpp.obj	f94393c21e600787
-51	6393	6916583877435763	CMakeFiles/Fahm.dir/src/TilemapWindow.cpp.obj	a8ad9785b41b8413
-45	8522	6916583898731132	CMakeFiles/Fahm.dir/src/Tilemap.cpp.obj	22f2e810eef107ad
-5109	5721	6916596084768181	C:/Users/on3sn/Desktop/Fahm/Main.exe	876255d6c0c2a649
-4881	5109	6916596078695785	libFahm.a	2aa8c35f34cc0d15
+5211	5453	6916597716823156	libFahm.a	2aa8c35f34cc0d15
 29	4586	6916583859411107	CMakeFiles/Fahm.dir/src/Entity.cpp.obj	44ec94f9b82259b
 36	12471	6913115937700129	CMakeFiles/Fahm.dir/src/SDLHandler.cpp.obj	5fb0e2ad8fecdb71
 19	1915	6916225687238154	CMakeFiles/Fahm.dir/src/BaseWindow.cpp.obj	bf3c3e4208b29575
@@ -11,15 +7,10 @@
 33	8317	6913115896125016	CMakeFiles/Fahm.dir/src/MenuTools.cpp.obj	bcca24bdf9d1b570
 26	593	6913969082052436	CMakeFiles/Fahm.dir/src/EventQueue.cpp.obj	45c1245a7dce10bf
 10	6879	6916213656994236	CMakeFiles/Fahm.dir/src/TextHandler.cpp.obj	451f4f2b4f43c598
-24	3299	6914541346569465	CMakeFiles/Fahm.dir/src/InputHandler.cpp.obj	2ab7996b2f5bda97
-34	3165	6916591096405765	CMakeFiles/Main.dir/main.cpp.obj	d41be79a169e8b58
-21	4881	6916596076362445	CMakeFiles/Fahm.dir/src/Fahm.cpp.obj	e3cfe65bcd11af2d
-32	4877	6916597232716606	CMakeFiles/Fahm.dir/src/Fahm.cpp.obj	e3cfe65bcd11af2d
-4877	5069	6916597234712996	libFahm.a	2aa8c35f34cc0d15
-5069	5567	6916597239634852	C:/Users/on3sn/Desktop/Fahm/Main.exe	876255d6c0c2a649
-18	5059	6916597517842824	CMakeFiles/Fahm.dir/src/Fahm.cpp.obj	e3cfe65bcd11af2d
-5059	5306	6916597520363621	libFahm.a	2aa8c35f34cc0d15
-5306	5834	6916597525595064	C:/Users/on3sn/Desktop/Fahm/Main.exe	876255d6c0c2a649
 10	5211	6916597714321619	CMakeFiles/Fahm.dir/src/Fahm.cpp.obj	e3cfe65bcd11af2d
-5211	5453	6916597716823156	libFahm.a	2aa8c35f34cc0d15
+34	3165	6916591096405765	CMakeFiles/Main.dir/main.cpp.obj	d41be79a169e8b58
+51	6393	6916583877435763	CMakeFiles/Fahm.dir/src/TilemapWindow.cpp.obj	a8ad9785b41b8413
+24	3299	6914541346569465	CMakeFiles/Fahm.dir/src/InputHandler.cpp.obj	2ab7996b2f5bda97
+27	2158	6913649674728094	CMakeFiles/Fahm.dir/src/TextureHandler.cpp.obj	f94393c21e600787
+45	8522	6916583898731132	CMakeFiles/Fahm.dir/src/Tilemap.cpp.obj	22f2e810eef107ad
 5454	6021	6916597721989797	C:/Users/on3sn/Desktop/Fahm/Main.exe	876255d6c0c2a649

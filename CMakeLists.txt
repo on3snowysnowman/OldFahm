@@ -11,6 +11,7 @@ add_library(Fahm
     src/EventQueue.cpp
     src/Fahm.cpp
     src/InputHandler.cpp
+    src/Menu.cpp
     src/OJAsciiEngine.cpp
     src/TextHandler.cpp
     src/TextureHandler.cpp
