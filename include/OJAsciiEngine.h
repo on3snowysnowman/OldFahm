@@ -68,10 +68,7 @@ protected:
 
     std::vector<int> get_pressed_keys();
     std::vector<int> get_raw_pressed_keys();
-
-    Entity* create_entity(int x_pos, int y_pos, int rendering_priority, 
-        char symbol, std::string name, std::string color, bool add_collider);
-
+    
 private:
 
     void handle_events();

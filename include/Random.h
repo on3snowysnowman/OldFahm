@@ -2,7 +2,6 @@
 
 #include <time.h>   
 #include <algorithm>
-
 #include <vector>
 
 struct Random

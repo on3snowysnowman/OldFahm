@@ -36,6 +36,7 @@ void InputHandler::set_delay(int i, int frames)
     }
 }
 
+
 void InputHandler::add_key(int key) 
 {
     if(keys.count(key) == 0)
@@ -68,17 +69,4 @@ std::vector<Key*> InputHandler::get_active_keys()
     }
 
     return available_keys;
-}
-
-std::vector<Key*> InputHandler::get_raw_pressed_keys()
-{
-    std::vector<Key*> pressed_keys;
-
-    for(std::map<int, Key*>::iterator it = keys.begin(); it != keys.end();
-        it++)
-    {
-        pressed_keys.push_back(it->second);
-    }
-
-    return pressed_keys;
 }

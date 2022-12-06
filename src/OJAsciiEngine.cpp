@@ -6,6 +6,10 @@
 #include "Components/SpriteComponent.h"
 #include "Components/ColliderComponent.h"
 
+#ifdef _WIN32
+#include <wtypes.h>
+#endif
+
 
 // Constructors / Deconstructor
 
@@ -14,10 +18,22 @@ ojae::OJAsciiEngine::OJAsciiEngine(const char* title)
 
     nlohmann::json settings_json = Jloader::get("data/ojae_settings.json");
 
-    running = false;
+    #ifdef _WIN32
+
+    RECT desktop;
+
+    // Get a handle to the desktop window
+    const HWND hDesktop = GetDesktopWindow();
+    GetWindowRect(hDesktop, &desktop);
+    screen_width = desktop.right;
+    screen_height = desktop.bottom;
+    
+    #else
 
     screen_width = settings_json["screen width"];
     screen_height = settings_json["screen height"];
+
+    #endif
 
     if(screen_width < 500 ||
         screen_height < 500)
@@ -32,6 +48,8 @@ ojae::OJAsciiEngine::OJAsciiEngine(const char* title)
             " and screen_width", false, false);
         exit(0);
     }
+
+    running = false;
 
     if(SDL_Init(SDL_INIT_EVERYTHING) != 0)
     {
@@ -140,21 +158,6 @@ std::vector<int> ojae::OJAsciiEngine::get_pressed_keys()
 std::vector<int> ojae::OJAsciiEngine::get_raw_pressed_keys()
 {
     return raw_pressed_keys;
-}
-
-Entity* ojae::OJAsciiEngine::create_entity(int x_pos, int y_pos, int rendering_priority, 
-    char symbol, std::string name, std::string color, bool add_collider)
-{
-    Entity* e = new Entity(name);
-    e->add_component<TransformComponent>(x_pos, y_pos);
-    e->add_component<SpriteComponent>(symbol, color, rendering_priority);
-
-    if(add_collider)
-    {
-        e->add_component<ColliderComponent>();
-    }
-
-    return e;
 }
 
 // Private Members

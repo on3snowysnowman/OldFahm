@@ -252,8 +252,9 @@ void BaseWindow::set_cursor_pos(int x, int y)
 void BaseWindow::zoom_in() 
 {
     float font_size_multiplier = text_handler->get_font_size_multiplier();
-
-    if(font_size_multiplier < 2.0)
+    
+    if((font_size_multiplier + 0.2) * text_handler->get_font_width() * 20 <
+        (end_x - start_x))
     {
         text_handler->modify_font_multiplier(0.2);
     }

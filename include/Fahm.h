@@ -18,14 +18,8 @@ public:
 
 private:
 
-    Tilemap* tilemap;
-
     BaseWindow* full_window;
-    BaseWindow* text_window;
-    BaseWindow* inventory_window;
     
-    TilemapWindow* tilemap_window;
-
     void startup_screen();
     void loading_screen();
 

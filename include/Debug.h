@@ -1,6 +1,7 @@
 #pragma once
 
 #include <fstream>
+#include <iostream>
 #include <SDL2/SDL.h>
 
 static std::fstream debug_file_stream;
@@ -17,7 +18,6 @@ private:
 
         if(debug_file_stream.is_open())
         {
-
             if(output_time)
             {
                 debug_file_stream << SDL_GetTicks64();

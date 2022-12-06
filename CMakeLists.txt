@@ -10,7 +10,9 @@ add_library(Fahm
     src/Entity.cpp
     src/EventQueue.cpp
     src/Fahm.cpp
+    src/GameplayMenu.cpp
     src/InputHandler.cpp
+    src/InventoryMenu.cpp
     src/Menu.cpp
     src/OJAsciiEngine.cpp
     src/TextHandler.cpp

@@ -86,11 +86,4 @@ public:
      */
     std::vector<Key*> get_active_keys();
 
-    /**
-     * @brief Returns a vector of Key points that are pressed by the user, 
-     * regardless if they are available or not
-     * 
-     */
-    std::vector<Key*> get_raw_pressed_keys();
-
 };

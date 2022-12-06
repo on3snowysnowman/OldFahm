@@ -20,7 +20,7 @@ TilemapWindow::TilemapWindow(TextureHandler* _texture_handler,
     BaseWindow(_texture_handler, _start_x, _start_y, _end_x, _end_y, false)
 {
     tilemap = _tilemap;
-    camera_radius = 7;
+    camera_radius = 10;
     camera = new Entity("Camera");
     camera->add_component<TransformComponent>(0, 0);
     camera->add_component<SpriteComponent>('%', "WHITE", -1);
