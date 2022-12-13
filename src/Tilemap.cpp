@@ -178,3 +178,8 @@ std::list<Entity*> Tilemap::get_entities_at_position(int x, int y)
 }
 
 EntityHandler* Tilemap::get_entity_handler() { return entity_handler; }
+
+
+// ___________________________TilemapHandler___________________________________
+
+Tilemap* TilemapHandler::active_tilemap = nullptr;

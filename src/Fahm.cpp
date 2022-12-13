@@ -23,10 +23,10 @@ Fahm::~Fahm() {}
 
 void Fahm::start()
 {
-    MenuData::screen_width = screen_width;
-    MenuData::screen_height = screen_height;
+    MenuManager::screen_width = screen_width;
+    MenuManager::screen_height = screen_height;
 
-    MenuData::texture_handler = texture_handler;
+    MenuManager::texture_handler = texture_handler;
 
     full_window = new BaseWindow(texture_handler, 0, 0, screen_width,
         screen_height, false);
@@ -34,9 +34,10 @@ void Fahm::start()
     loading_screen();
 
     GameplayMenu* gameplay_menu = new GameplayMenu(input_handler);
-    InventoryMenu* inventory_menu = new InventoryMenu(input_handler);
+    InventoryMenu* inventory_menu = new InventoryMenu(input_handler, 
+        gameplay_menu->get_player()->get_component<StorageComponent>());
 
-    MenuData::activate_menu(gameplay_menu);
+    MenuManager::activate_menu(gameplay_menu);
 
     startup_screen();
     start_OJAE(); 
@@ -99,10 +100,10 @@ void Fahm::handle_key_press()
 
             case SDLK_RIGHTBRACKET:
 
-                if(MenuData::active_menus.size() > 0)
+                if(MenuManager::active_menus.size() > 0)
                 {
-                    MenuData::get_active_menu()->zoom_in();
-                    MenuData::get_active_menu()->zoom_in();
+                    MenuManager::get_active_menu()->zoom_in();
+                    MenuManager::get_active_menu()->zoom_in();
                 }
 
                 input_handler->set_delay(k->id);
@@ -110,10 +111,10 @@ void Fahm::handle_key_press()
 
             case SDLK_LEFTBRACKET:
 
-                if(MenuData::active_menus.size() > 0)
+                if(MenuManager::active_menus.size() > 0)
                 {
-                    MenuData::get_active_menu()->zoom_out();
-                    MenuData::get_active_menu()->zoom_out();
+                    MenuManager::get_active_menu()->zoom_out();
+                    MenuManager::get_active_menu()->zoom_out();
                 }
                 input_handler->set_delay(k->id);
                 break;
@@ -126,9 +127,9 @@ void Fahm::update()
     handle_key_press();
     handle_queue_events();
 
-    if(MenuData::has_active_menu())
+    if(MenuManager::has_active_menu())
     {
-        MenuData::get_active_menu()->update();
+        MenuManager::get_active_menu()->update();
     }
 }
 
@@ -136,9 +137,9 @@ void Fahm::render()
 {
     clear_screen();
 
-    if(MenuData::has_active_menu())
+    if(MenuManager::has_active_menu())
     {
-        MenuData::get_active_menu()->render();
+        MenuManager::get_active_menu()->render();
     }
 
     draw_to_screen();

@@ -18,6 +18,8 @@ public:
     void update() override;
     void render() override;
 
+    Entity* get_player();
+
 private:
 
     InputHandler* input_handler;
@@ -26,6 +28,8 @@ private:
 
     BaseWindow* tile_display_window;
     TilemapWindow* tilemap_window;
+
+    Entity* player;
 
     Entity* create_entity(int x_pos, int y_pos, int rendering_priority, 
         char symbol, std::string name, std::string color, bool add_collider);

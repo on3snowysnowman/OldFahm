@@ -8,7 +8,7 @@
 
 class Menu;
 
-struct MenuData
+struct MenuManager
 {
     static int screen_width;
     static int screen_height;

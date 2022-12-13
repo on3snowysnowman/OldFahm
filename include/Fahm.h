@@ -18,6 +18,8 @@ public:
 
 private:
 
+    Tilemap* tilemap;
+
     BaseWindow* full_window;
     
     void startup_screen();

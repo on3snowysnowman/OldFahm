@@ -30,7 +30,7 @@ struct HarvestPlant : public Script
         return "HarvestPlant";
     }
 
-    void harvest()
+    bool harvest()
     {
         TransformComponent* t_comp = entity->get_component<
             TransformComponent>();
@@ -46,8 +46,11 @@ struct HarvestPlant : public Script
                 entity->entity_handler->remove_entity(e, t_comp->x_pos, 
                     t_comp->y_pos);
                 s_comp->add_entity(e);
+                return true;
             }
         }
+
+        return false;
     }
 
 };

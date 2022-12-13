@@ -15,12 +15,14 @@ GameplayMenu::GameplayMenu(InputHandler* _input_handler)
 
     tilemap = new Tilemap(30, 30);
 
-    tilemap_window = new TilemapWindow(MenuData::texture_handler, tilemap, 0, 0, 
-        MenuData::screen_width / 2, MenuData::screen_height);
+    TilemapHandler::active_tilemap = tilemap;
+
+    tilemap_window = new TilemapWindow(MenuManager::texture_handler, tilemap, 0, 0, 
+        MenuManager::screen_width / 2, MenuManager::screen_height);
     
-    tile_display_window = new BaseWindow(MenuData::texture_handler, 
-        (MenuData::screen_width / 2), 0, MenuData::screen_width, 
-        MenuData::screen_height, false);
+    tile_display_window = new BaseWindow(MenuManager::texture_handler, 
+        (MenuManager::screen_width / 2), 0, MenuManager::screen_width, 
+        MenuManager::screen_height, false);
 
     windows.push_back(tilemap_window);
     windows.push_back(tile_display_window);
@@ -76,7 +78,7 @@ GameplayMenu::GameplayMenu(InputHandler* _input_handler)
 
     // Player
 
-    Entity* player = create_entity(0, 0, 20, 'P', "Player", "BLUE", true);
+    player = create_entity(0, 0, 20, 'P', "Player", "BLUE", true);
     player->add_component<StorageComponent>(30);
     player->add_script<HarvestPlant>(
         player->get_component<StorageComponent>());
@@ -188,7 +190,7 @@ void GameplayMenu::update()
 
             case SDLK_i:
 
-                MenuData::activate_menu("InventoryMenu");
+                MenuManager::activate_menu("InventoryMenu");
                 input_handler->set_delay(k->id, -1);
                 break;
         }
@@ -205,6 +207,8 @@ void GameplayMenu::render()
 
 
 // Private members
+
+Entity* GameplayMenu::get_player() { return player; }
 
 Entity* GameplayMenu::create_entity(int x_pos, int y_pos, int rendering_priority, 
     char symbol, std::string name, std::string color, bool add_collider)

@@ -8,7 +8,6 @@ struct TestScript : public Script
 {
     TestScript() : Script()
     {
-        start();
     }
 
     ~TestScript() {}

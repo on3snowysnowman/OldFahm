@@ -38,3 +38,8 @@ private:
     
     EntityHandler* entity_handler;
 };
+
+struct TilemapHandler
+{
+    static Tilemap* active_tilemap;
+};

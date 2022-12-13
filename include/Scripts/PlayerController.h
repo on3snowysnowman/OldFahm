@@ -116,10 +116,11 @@ struct PlayerController : public Script
                     {
                         HarvestPlant* h_script = entity->get_script<
                             HarvestPlant>();
-                        h_script->harvest();
+                        if(h_script->harvest())
+                        { 
+                            input_handler->set_delay(k->id);
+                        }
                     }
-
-                    input_handler->set_delay(k->id);
 
                     break;
             }
