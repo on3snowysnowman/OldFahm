@@ -61,6 +61,7 @@ private:
      */
     std::map<int, Key*> keys;
 
+    std::vector<Key> raw_keys;
 
 public:
 
@@ -78,6 +79,10 @@ public:
     void add_key(int key);
     void remove_key(int key);
 
+    void clear_raw_keys();
+
+    std::vector<Key> get_raw_keys();
+
     /**
      * @brief Returns a vector of Key pointers that are pressed by the user, 
      * and are available to be used
@@ -85,5 +90,5 @@ public:
      * @return Vector of Key pointers
      */
     std::vector<Key*> get_active_keys();
-
+    
 };

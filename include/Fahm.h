@@ -5,6 +5,7 @@
 #include "OJAsciiEngine.h"
 #include "Windows/AllWindows.h"
 #include "Tilemap.h"
+#include "Menus/AllMenus.h"
 
 class Fahm : public ojae::OJAsciiEngine
 {
@@ -19,9 +20,13 @@ public:
 private:
 
     Tilemap* tilemap;
-
     BaseWindow* full_window;
-    
+
+    MenuHandler* menu_handler;
+
+    GameplayMenu* gameplay_menu;
+    PauseMenu* pause_menu;
+
     void startup_screen();
     void loading_screen();
 

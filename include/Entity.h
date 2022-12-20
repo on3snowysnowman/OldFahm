@@ -9,8 +9,11 @@
 
 #include "Scripts/Script.h"
 #include "Components/Component.h"
+#include "Components/TransformComponent.h"
 #include "Components/SpriteComponent.h"
+#include "Components/ColliderComponent.h"
 #include "Debug.h"
+#include "Random.h"
 
 struct Entity;
 
@@ -436,3 +439,17 @@ public:
 
 };
 
+static Entity* create_generic_entity(std::string name, int x_pos, int y_pos,
+    char symbol, std::string color, int rendering_priority, bool add_collider)
+{
+    Entity* e = new Entity(name);
+    e->add_component<TransformComponent>(x_pos, y_pos);
+    e->add_component<SpriteComponent>(symbol, color, rendering_priority);
+    
+    if(add_collider)
+    {
+        e->add_component<ColliderComponent>();
+    }
+
+    return e;
+}

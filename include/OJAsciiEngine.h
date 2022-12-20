@@ -51,8 +51,6 @@ protected:
      */
     std::unordered_map<std::string, std::string> fonts;
 
-    std::vector<int> raw_pressed_keys;
-
     InputHandler* input_handler;
 
     TextureHandler* texture_handler;
@@ -67,7 +65,6 @@ protected:
     virtual void quit();
 
     std::vector<int> get_pressed_keys();
-    std::vector<int> get_raw_pressed_keys();
     
 private:
 

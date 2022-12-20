@@ -1,35 +1,19 @@
 #pragma once
 
 #include <vector>
-#include <string>
+#include <list>
 
-#include "../TextureHandler.h"
-#include "../Windows/BaseWindow.h"
+#include "InputHandler.h"
 
-class Menu;
-
-struct MenuManager
+enum MenuID
 {
-    static int screen_width;
-    static int screen_height;
-
-    static TextureHandler* texture_handler;
-    
-    static std::vector<Menu*> active_menus;
-    static std::vector<Menu*> all_menus;
-
-    static void add_menu(Menu* _menu);
-    static void activate_menu(Menu* _menu);
-    static void activate_menu(std::string _menu_name);
-    static void deactivate_menu(Menu* _menu);
-    static void deactivate_menu(std::string _menu_name);
-
-    static bool has_active_menu();
-
-    static Menu* get_active_menu();
-
+    BASE,
+    GAMEPLAY,
+    PAUSE,
+    INVENTORY
 };
 
+class MenuHandler;
 
 class Menu
 {
@@ -37,17 +21,42 @@ class Menu
 public:
 
     Menu();
+    Menu(MenuHandler* _menu_handler, InputHandler* _input_handler);
 
-    virtual void update();
-    virtual void render();
-    void zoom_in();
-    void zoom_out();
+    virtual void update() = 0;
+    virtual void render() = 0;
+    virtual void start() = 0;
 
-    std::string get_name();
+    MenuID get_menu_id();
 
 protected:
 
-    std::string name;
+    MenuHandler* menu_handler;
+    InputHandler* input_handler;
 
-    std::vector<BaseWindow*> windows;
+    MenuID menu_id = BASE;
+
 };
+
+class MenuHandler
+{
+
+public:
+
+    MenuHandler();
+    
+    void update();
+    void render();
+
+    void add_menu(Menu* menu);
+    void deactivate_active_menu();
+
+    bool activate_menu(Menu* menu);
+    bool activate_menu(MenuID menu_id);
+
+private:
+
+    std::vector<Menu*> all_menus;
+    std::list<Menu*> active_menus;
+};
+

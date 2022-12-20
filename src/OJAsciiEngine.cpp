@@ -6,6 +6,7 @@
 #include "Components/SpriteComponent.h"
 #include "Components/ColliderComponent.h"
 
+
 #ifdef _WIN32
 #include <wtypes.h>
 #endif
@@ -155,16 +156,11 @@ std::vector<int> ojae::OJAsciiEngine::get_pressed_keys()
     return pressed_keys; 
 }
 
-std::vector<int> ojae::OJAsciiEngine::get_raw_pressed_keys()
-{
-    return raw_pressed_keys;
-}
-
 // Private Members
 
 void ojae::OJAsciiEngine::handle_events()
 {
-    raw_pressed_keys.clear();
+    input_handler->clear_raw_keys();
 
     while(SDL_PollEvent(&event))
     {
@@ -176,7 +172,6 @@ void ojae::OJAsciiEngine::handle_events()
         else if(event.type == SDL_KEYDOWN)
         {
             input_handler->add_key(event.key.keysym.sym);
-            raw_pressed_keys.push_back(event.key.keysym.sym);
         }
 
         else if(event.type == SDL_KEYUP)

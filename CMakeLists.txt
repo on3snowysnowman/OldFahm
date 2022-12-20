@@ -12,9 +12,10 @@ add_library(Fahm
     src/Fahm.cpp
     src/GameplayMenu.cpp
     src/InputHandler.cpp
-    src/InventoryMenu.cpp
     src/Menu.cpp
+    src/MenuTools.cpp
     src/OJAsciiEngine.cpp
+    src/PauseMenu.cpp
     src/TextHandler.cpp
     src/TextureHandler.cpp
     src/Tilemap.cpp

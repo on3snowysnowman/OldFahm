@@ -10,7 +10,6 @@
 
 struct PlayerController : public Script
 {
-    
     InputHandler* input_handler;
 
     PlayerController(InputHandler* _input_handler)
@@ -75,31 +74,59 @@ struct PlayerController : public Script
 
         for(Key* k : input_handler->get_active_keys())
         {
-
             switch(k->id)
             {
-                // Up Arrow
-                case SDLK_UP:
+                case SDLK_w:
 
                     modify_position(t_comp, 0, -1);
                     input_handler->set_delay(k->id);
                     break;
 
-                case SDLK_RIGHT:
+                case SDLK_e:
+
+                    modify_position(t_comp, 1, -1);
+                    input_handler->set_delay(k->id);
+                    break;
+
+                case SDLK_d:
 
                     modify_position(t_comp, 1, 0);
                     input_handler->set_delay(k->id);
                     break;
 
-                case SDLK_DOWN:
+                case SDLK_c:
+
+                    modify_position(t_comp, 1, 1);
+                    input_handler->set_delay(k->id);
+                    break;
+
+                case SDLK_s:
+
+                    modify_position(t_comp, 0, 1);
+                    input_handler->set_delay(k->id);
+                    break;
+                
+                case SDLK_x:
 
                     modify_position(t_comp, 0, 1);
                     input_handler->set_delay(k->id);
                     break;
 
-                case SDLK_LEFT:
+                case SDLK_z:
+
+                    modify_position(t_comp, -1, 1);
+                    input_handler->set_delay(k->id);
+                    break;
+
+                case SDLK_a:
 
                     modify_position(t_comp, -1, 0);
+                    input_handler->set_delay(k->id);
+                    break;
+
+                case SDLK_q:
+
+                    modify_position(t_comp, -1, -1);
                     input_handler->set_delay(k->id);
                     break;
 
@@ -126,6 +153,4 @@ struct PlayerController : public Script
             }
         }
     }
-
-
 };

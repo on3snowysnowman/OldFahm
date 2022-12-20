@@ -23,21 +23,23 @@ Fahm::~Fahm() {}
 
 void Fahm::start()
 {
-    MenuManager::screen_width = screen_width;
-    MenuManager::screen_height = screen_height;
-
-    MenuManager::texture_handler = texture_handler;
 
     full_window = new BaseWindow(texture_handler, 0, 0, screen_width,
         screen_height, false);
 
+    menu_handler = new MenuHandler();
+
+    tilemap = new Tilemap(45, 45);
+
+    gameplay_menu = new GameplayMenu(menu_handler, input_handler, 
+        texture_handler, tilemap, 0, 0, screen_width, screen_height);
+
+    pause_menu = new PauseMenu(menu_handler, input_handler, texture_handler, 
+        0, 0, screen_width, screen_height);
+
+    menu_handler->activate_menu(gameplay_menu);
+
     loading_screen();
-
-    GameplayMenu* gameplay_menu = new GameplayMenu(input_handler);
-    InventoryMenu* inventory_menu = new InventoryMenu(input_handler, 
-        gameplay_menu->get_player()->get_component<StorageComponent>());
-
-    MenuManager::activate_menu(gameplay_menu);
 
     startup_screen();
     start_OJAE(); 
@@ -97,25 +99,18 @@ void Fahm::handle_key_press()
     {
         switch(k->id)
         {
+            // case SDLK_ESCAPE:   
+
+            //     running = false;
+            //     break;
 
             case SDLK_RIGHTBRACKET:
-
-                if(MenuManager::active_menus.size() > 0)
-                {
-                    MenuManager::get_active_menu()->zoom_in();
-                    MenuManager::get_active_menu()->zoom_in();
-                }
 
                 input_handler->set_delay(k->id);
                 break;
 
             case SDLK_LEFTBRACKET:
 
-                if(MenuManager::active_menus.size() > 0)
-                {
-                    MenuManager::get_active_menu()->zoom_out();
-                    MenuManager::get_active_menu()->zoom_out();
-                }
                 input_handler->set_delay(k->id);
                 break;
         }
@@ -127,20 +122,14 @@ void Fahm::update()
     handle_key_press();
     handle_queue_events();
 
-    if(MenuManager::has_active_menu())
-    {
-        MenuManager::get_active_menu()->update();
-    }
+    menu_handler->update();
 }
 
 void Fahm::render()
 {
     clear_screen();
 
-    if(MenuManager::has_active_menu())
-    {
-        MenuManager::get_active_menu()->render();
-    }
+    menu_handler->render();
 
     draw_to_screen();
 }

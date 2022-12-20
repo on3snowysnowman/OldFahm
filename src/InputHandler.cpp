@@ -39,6 +39,8 @@ void InputHandler::set_delay(int i, int frames)
 
 void InputHandler::add_key(int key) 
 {
+    raw_keys.push_back(Key(key));
+
     if(keys.count(key) == 0)
     {
         keys[key] = new Key(key);
@@ -52,6 +54,16 @@ void InputHandler::remove_key(int key)
         delete keys[key];
         keys.erase(key);
     }
+}
+
+void InputHandler::clear_raw_keys()
+{
+    raw_keys.clear();
+}
+
+std::vector<Key> InputHandler::get_raw_keys()
+{
+    return raw_keys;
 }
 
 std::vector<Key*> InputHandler::get_active_keys() 

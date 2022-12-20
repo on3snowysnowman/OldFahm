@@ -1,36 +1,31 @@
-#pragma once
+#pragma once 
 
 #include "Menu.h"
 #include "Tilemap.h"
-#include "../Entity.h"
-#include "../InputHandler.h"
-#include "../Windows/BaseWindow.h"
-#include "../Windows/TilemapWindow.h"
+#include "Windows/TilemapWindow.h"
+#include "TextureHandler.h"
+#include "InputHandler.h"
 
 class GameplayMenu : public Menu
 {
 
 public:
 
-    GameplayMenu(InputHandler* _input_handler);
-    ~GameplayMenu();
+    GameplayMenu(MenuHandler* _menu_handler, InputHandler* input_handler,
+        TextureHandler* texture_handler, Tilemap* _tilemap, int start_x, 
+        int start_y, int end_x, int end_y);
 
     void update() override;
     void render() override;
+    void start() override;
 
-    Entity* get_player();
+    void init_tilemap();
 
 private:
 
-    InputHandler* input_handler;
-
     Tilemap* tilemap;
 
-    BaseWindow* tile_display_window;
     TilemapWindow* tilemap_window;
 
-    Entity* player;
-
-    Entity* create_entity(int x_pos, int y_pos, int rendering_priority, 
-        char symbol, std::string name, std::string color, bool add_collider);
 };
+

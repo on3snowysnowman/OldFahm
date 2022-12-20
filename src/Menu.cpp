@@ -1,128 +1,98 @@
-#include "Menus/Menu.h"
-#include "Debug.h"
-
 #include <iostream>
-//____________________________MenuManager______________________________________
 
-int MenuManager::screen_width = 0;
-int MenuManager::screen_height = 0;
+#include "Menus/Menu.h"
 
-TextureHandler* MenuManager::texture_handler = nullptr;
-std::vector<Menu*> MenuManager::active_menus;
-std::vector<Menu*> MenuManager::all_menus;
+//______________________________MENU___________________________________________
 
-// Public members
 
-void MenuManager::add_menu(Menu* _menu)
+// Constructors / Deconstructors
+
+Menu::Menu() {}
+
+Menu::Menu(MenuHandler* _menu_handler, InputHandler* _input_handler)
 {
-    all_menus.push_back(_menu);
-}
+    menu_handler = _menu_handler;
+    input_handler = _input_handler;
 
-void MenuManager::activate_menu(std::string _menu_name)
-{
-
-    for(Menu* m : all_menus)
-    {
-        if(m->get_name() == _menu_name)
-        {
-            active_menus.push_back(m);
-            return;
-        }
-    }
-
-    std::string message = "[WARN] MenuManager.set_active_menu(MenuType _menu"
-        "_type) where _menu_type is \"" + _menu_name + "\""
-        " -> Could not find a menu matching _menu_type in menu list";
-
-    Debug::log(message);
-}
-
-void MenuManager::activate_menu(Menu* _menu)
-{
-    active_menus.push_back(_menu);
-}
-
-void MenuManager::deactivate_menu(Menu* _menu)
-{
-    for(int i = active_menus.size() - 1; i >= 0; i--)
-    {
-        if(active_menus.at(i) == _menu)
-        {
-            active_menus.erase(active_menus.begin() + i);
-            return;
-        }
-    }
-
-    std::string message = "[WARN] MenuManager.deactivate_menu(Menu* _menu) where "
-        " _menu's name is \"" + _menu->get_name() + "\" -> Could not find Menu"
-        " in active menus";
-    Debug::log(message);
-}
-
-void MenuManager::deactivate_menu(std::string _menu_name)
-{
-    for(int i = active_menus.size() - 1; i--; i >= 0)
-    {
-        if(active_menus.at(i)->get_name() == _menu_name)
-        {
-            active_menus.erase(active_menus.begin() + i);
-            return;
-        }
-    }
-    
-    std::string message = "[WARN] MenuManager.deactivate_menu(std::string"
-        "_menu_name) where  _menu's name is \"" + _menu_name + "\" -> "
-        "Could not find Menu in active menus";
-    Debug::log(message);
-}
-
-bool MenuManager::has_active_menu()
-{
-    return active_menus.size() > 0;
-}
-
-Menu* MenuManager::get_active_menu()
-{
-    if(!has_active_menu)
-    {
-        return nullptr;
-    }
-
-    return active_menus.at(active_menus.size() - 1);
+    menu_handler->add_menu(this);
 }
 
 
-// _________________________________MENU__________________________________________
-
-// Constructors / Deconstructor
-
-Menu::Menu() 
-{
-    MenuManager::add_menu(this);
-    name = "Menu";
-}
-
-
-// Public members
+// Public Members
 
 void Menu::update() {}
 
 void Menu::render() {}
 
-void Menu::zoom_in() 
+void Menu::start() {}
+
+MenuID Menu::get_menu_id()
 {
-    for(BaseWindow* b : windows)
+    return menu_id;
+}
+
+
+//____________________________MENUHANDLER______________________________________
+
+
+// Constructors / Deconstructor
+
+MenuHandler::MenuHandler() {}
+
+
+// Public Members
+
+
+void MenuHandler::update()
+{
+    if(active_menus.size() > 0)
     {
-        b->zoom_in();
+        active_menus.back()->update();
     }
 }
 
-void Menu::zoom_out() 
+void MenuHandler::render()
 {
-    for(BaseWindow* b : windows)
+    if(active_menus.size() > 0)
     {
-        b->zoom_out();
+        active_menus.back()->render();
     }
 }
 
-std::string Menu::get_name() { return name; }
+void MenuHandler::add_menu(Menu* menu)
+{
+    all_menus.push_back(menu);
+}
+
+void MenuHandler::deactivate_active_menu()
+{
+    if(active_menus.size() > 0)
+    {
+        active_menus.pop_back();
+    }
+}
+
+bool MenuHandler::activate_menu(Menu* menu)
+{
+    active_menus.push_back(menu);
+    return true;
+}
+
+bool MenuHandler::activate_menu(MenuID menu_id)
+{
+
+    for(Menu* m : all_menus)
+    {
+        if(m->get_menu_id() == menu_id)
+        {
+            active_menus.push_back(m);
+            return true;
+        }
+    }
+
+    exit(0);
+
+    return false;
+}
+
+
