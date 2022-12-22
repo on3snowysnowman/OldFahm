@@ -29,4 +29,5 @@ private:
     Tilemap* tilemap;
 
     TilemapWindow* tilemap_window;
+    BaseWindow* tile_display_window;
 };

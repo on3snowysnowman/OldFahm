@@ -24,6 +24,16 @@ PauseMenu::PauseMenu(MenuHandler* _menu_handler,
 void PauseMenu::update()
 {
 
+    for(Key* k : input_handler->get_active_keys())
+    {
+        if(k->id == SDLK_ESCAPE)
+        {
+            menu_handler->deactivate_active_menu();
+            input_handler->set_delay(SDLK_ESCAPE, -1);
+            return;
+        }
+    }
+
     std::vector<Text> choices 
     {
         Text("Resume"),

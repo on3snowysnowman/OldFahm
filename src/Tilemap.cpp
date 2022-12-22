@@ -35,17 +35,17 @@ Tilemap::Tilemap(int _width, int _height)
 
     Entity* edge_map_collider = new Entity("EDGE MAP COLLIDER");
     edge_map_collider->add_component<TransformComponent>(0, 0);
-    edge_map_collider->add_component<SpriteComponent>('S', "LGRAY", 5);
+    edge_map_collider->add_component<SpriteComponent>('X', "RED", -1);
     edge_map_collider->add_component<ColliderComponent>();
     edge_map_collider->add_tag("NON_TRAVERSABLE");
 
     for(int x = 0; x < width; x++)
-    {
+    { 
         add_copy_entity(edge_map_collider, x, 0);
         add_copy_entity(edge_map_collider, x, height - 1);
     }
 
-    for(int y = 0; y < height; y++)
+    for(int y = 1; y < height - 1; y++)
     {
         add_copy_entity(edge_map_collider, 0, y);
         add_copy_entity(edge_map_collider, width - 1, y);
@@ -112,17 +112,13 @@ void Tilemap::remove_entity(Entity* e)
 
 void Tilemap::fill_tilemap(Entity* e)
 {
-    TransformComponent* t_component = 
-        e->get_component<TransformComponent>();
-
-    int initial_x = t_component->x_pos;
-    int initial_y = t_component->y_pos;
+    add_entity(e, 0, 0);
 
     for(int y = 0; y < height; y++)
     {
         for(int x = 0; x < width; x++)
         {
-            if(x != initial_x || y != initial_y)
+            if(x != 0 || y != 0)
             {
                 add_copy_entity(e, x, y);
             }

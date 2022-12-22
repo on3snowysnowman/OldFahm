@@ -51,8 +51,6 @@ struct CursorController : public Script
         // }
 
         if(!tilemap_window->is_position_within_render_bounds(x_pos + x_delta, 
-            y_pos + y_delta) || !CollisionHandler::
-            is_traversable_without_collider(entity, x_pos + x_delta,
             y_pos + y_delta))
         {
             return;
