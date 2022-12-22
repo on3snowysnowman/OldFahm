@@ -4,13 +4,14 @@
 #include <list>
 
 #include "InputHandler.h"
+#include "TextureHandler.h"
 
 enum MenuID
 {
     BASE,
     GAMEPLAY,
     PAUSE,
-    INVENTORY
+    CURSOR
 };
 
 class MenuHandler;
@@ -21,7 +22,8 @@ class Menu
 public:
 
     Menu();
-    Menu(MenuHandler* _menu_handler, InputHandler* _input_handler);
+    Menu(MenuHandler* _menu_handler, InputHandler* _input_handler,
+        TextureHandler* _texture_handler);
 
     virtual void update() = 0;
     virtual void render() = 0;
@@ -33,6 +35,7 @@ protected:
 
     MenuHandler* menu_handler;
     InputHandler* input_handler;
+    TextureHandler* texture_handler;
 
     MenuID menu_id = BASE;
 
@@ -53,6 +56,8 @@ public:
 
     bool activate_menu(Menu* menu);
     bool activate_menu(MenuID menu_id);
+
+    Menu* get_menu(MenuID menu_id);
 
 private:
 

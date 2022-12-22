@@ -36,6 +36,10 @@ ojae::OJAsciiEngine::OJAsciiEngine(const char* title)
 
     #endif
 
+    screen_width = settings_json["screen width"];
+    screen_height = settings_json["screen height"];
+
+
     if(screen_width < 500 ||
         screen_height < 500)
     {

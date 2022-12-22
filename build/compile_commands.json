@@ -1,6 +1,11 @@
 [
 {
   "directory": "C:/Users/on3sn/Desktop/Fahm/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Users/on3sn/Desktop/Fahm/include -IC:/Users/on3sn/Desktop/Fahm/src -isystem C:/msys64/mingw64/include/SDL2 -O3 -g -o CMakeFiles\\Fahm.dir\\src\\AudioHandler.cpp.obj -c C:\\Users\\on3sn\\Desktop\\Fahm\\src\\AudioHandler.cpp",
+  "file": "C:\\Users\\on3sn\\Desktop\\Fahm\\src\\AudioHandler.cpp"
+},
+{
+  "directory": "C:/Users/on3sn/Desktop/Fahm/build",
   "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Users/on3sn/Desktop/Fahm/include -IC:/Users/on3sn/Desktop/Fahm/src -isystem C:/msys64/mingw64/include/SDL2 -O3 -g -o CMakeFiles\\Fahm.dir\\src\\BaseWindow.cpp.obj -c C:\\Users\\on3sn\\Desktop\\Fahm\\src\\BaseWindow.cpp",
   "file": "C:\\Users\\on3sn\\Desktop\\Fahm\\src\\BaseWindow.cpp"
 },
@@ -58,6 +63,11 @@
   "directory": "C:/Users/on3sn/Desktop/Fahm/build",
   "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Users/on3sn/Desktop/Fahm/include -IC:/Users/on3sn/Desktop/Fahm/src -isystem C:/msys64/mingw64/include/SDL2 -O3 -g -o CMakeFiles\\Fahm.dir\\src\\TextureHandler.cpp.obj -c C:\\Users\\on3sn\\Desktop\\Fahm\\src\\TextureHandler.cpp",
   "file": "C:\\Users\\on3sn\\Desktop\\Fahm\\src\\TextureHandler.cpp"
+},
+{
+  "directory": "C:/Users/on3sn/Desktop/Fahm/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Users/on3sn/Desktop/Fahm/include -IC:/Users/on3sn/Desktop/Fahm/src -isystem C:/msys64/mingw64/include/SDL2 -O3 -g -o CMakeFiles\\Fahm.dir\\src\\TileDisplayMenu.cpp.obj -c C:\\Users\\on3sn\\Desktop\\Fahm\\src\\TileDisplayMenu.cpp",
+  "file": "C:\\Users\\on3sn\\Desktop\\Fahm\\src\\TileDisplayMenu.cpp"
 },
 {
   "directory": "C:/Users/on3sn/Desktop/Fahm/build",

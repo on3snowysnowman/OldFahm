@@ -37,6 +37,9 @@ void Fahm::start()
     pause_menu = new PauseMenu(menu_handler, input_handler, texture_handler, 
         0, 0, screen_width, screen_height);
 
+    tile_display_menu = new TileDisplayMenu(menu_handler, input_handler, 
+        texture_handler, 0, 0, screen_width, screen_height);
+
     menu_handler->activate_menu(gameplay_menu);
 
     loading_screen();

@@ -43,7 +43,7 @@ struct PlayerController : public Script
 
         // If the traversable check for the entities at this position does not 
         // return true
-        if(!CollisionHandler::is_traversable(entity, x_pos + x_delta, 
+        if(!CollisionHandler::is_traversable_with_collider(entity, x_pos + x_delta, 
             y_pos + y_delta))
         {
             return;
@@ -67,90 +67,102 @@ struct PlayerController : public Script
      */
     void update() override 
     {
+        // if(move_frame_delay > 0)
+        // {
+        //     move_frame_delay--; 
+        //     return;
+        // }
+
+        // move_frame_delay = 12;
+
         // Assume that this entity has a transform component, as 
         // all entities should
         TransformComponent* t_comp = entity->get_component
             <TransformComponent>();
 
-        for(Key* k : input_handler->get_active_keys())
+        std::vector<Key*> active_keys =    
+            input_handler->get_active_keys();
+        
+        if(active_keys.size() == 0) return;
+
+        int first_key_id = active_keys.at(0)->id;
+
+        switch(first_key_id)
         {
-            switch(k->id)
-            {
-                case SDLK_w:
+            case SDLK_w:
 
-                    modify_position(t_comp, 0, -1);
-                    input_handler->set_delay(k->id);
-                    break;
+                modify_position(t_comp, 0, -1);
+                input_handler->set_delay(first_key_id);
+                break;
 
-                case SDLK_e:
+            case SDLK_e:
 
-                    modify_position(t_comp, 1, -1);
-                    input_handler->set_delay(k->id);
-                    break;
+                modify_position(t_comp, 1, -1);
+                input_handler->set_delay(first_key_id);
+                break;
 
-                case SDLK_d:
+            case SDLK_d:
 
-                    modify_position(t_comp, 1, 0);
-                    input_handler->set_delay(k->id);
-                    break;
+                modify_position(t_comp, 1, 0);
+                input_handler->set_delay(first_key_id);
+                break;
 
-                case SDLK_c:
+            case SDLK_c:
 
-                    modify_position(t_comp, 1, 1);
-                    input_handler->set_delay(k->id);
-                    break;
+                modify_position(t_comp, 1, 1);
+                input_handler->set_delay(first_key_id);
+                break;
 
-                case SDLK_s:
+            case SDLK_s:
 
-                    modify_position(t_comp, 0, 1);
-                    input_handler->set_delay(k->id);
-                    break;
-                
-                case SDLK_x:
+                modify_position(t_comp, 0, 1);
+                input_handler->set_delay(first_key_id);
+                break;
+            
+            case SDLK_x:
 
-                    modify_position(t_comp, 0, 1);
-                    input_handler->set_delay(k->id);
-                    break;
+                modify_position(t_comp, 0, 1);
+                input_handler->set_delay(first_key_id);
+                break;
 
-                case SDLK_z:
+            case SDLK_z:
 
-                    modify_position(t_comp, -1, 1);
-                    input_handler->set_delay(k->id);
-                    break;
+                modify_position(t_comp, -1, 1);
+                input_handler->set_delay(first_key_id);
+                break;
 
-                case SDLK_a:
+            case SDLK_a:
 
-                    modify_position(t_comp, -1, 0);
-                    input_handler->set_delay(k->id);
-                    break;
+                modify_position(t_comp, -1, 0);
+                input_handler->set_delay(first_key_id);
+                break;
 
-                case SDLK_q:
+            case SDLK_q:
 
-                    modify_position(t_comp, -1, -1);
-                    input_handler->set_delay(k->id);
-                    break;
+                modify_position(t_comp, -1, -1);
+                input_handler->set_delay(first_key_id);
+                break;
 
-                case 't':
+            case 't':
 
-                    modify_position(t_comp, -(t_comp->x_pos - 1), 
-                        -(t_comp->y_pos - 1));
-                    input_handler->set_delay(k->id);
-                    break;
+                modify_position(t_comp, -(t_comp->x_pos - 1), 
+                    -(t_comp->y_pos - 1));
+                input_handler->set_delay(first_key_id);
+                break;
 
-                case 'h':
+            case 'h':
 
-                    if(entity->has_script<HarvestPlant>())
-                    {
-                        HarvestPlant* h_script = entity->get_script<
-                            HarvestPlant>();
-                        if(h_script->harvest())
-                        { 
-                            input_handler->set_delay(k->id);
-                        }
+                if(entity->has_script<HarvestPlant>())
+                {
+                    HarvestPlant* h_script = entity->get_script<
+                        HarvestPlant>();
+                    if(h_script->harvest())
+                    { 
+                        input_handler->set_delay(first_key_id);
                     }
+                }
 
-                    break;
-            }
+                break;
         }
     }
 };

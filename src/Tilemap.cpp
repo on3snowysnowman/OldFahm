@@ -102,8 +102,10 @@ void Tilemap::remove_entity(Entity* e)
     if(!entity_handler->remove_entity(e, t_component->x_pos, 
         t_component->y_pos))
     {
-        Debug::log("[ERR] Tilemap.remove_entity -> Could not remove" 
-            "entity");
+        std::string message = "[ERR] Tilemap.remove_entity(Entity* e) where" 
+            "\"e\" is" + e->name +  "-> Could not remove entity";
+
+        Debug::log(message);
         exit(0);
     }
 }

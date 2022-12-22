@@ -162,10 +162,10 @@ struct Entity
 
         scripts.push_back(new_script);
 
-        if(scripts.size() == 1) 
-        {
-            EntityTracker::entities.push_back(this);
-        }
+        // if(scripts.size() == 1) 
+        // {
+        //     EntityTracker::entities.push_back(this);
+        // }
     }
 
     std::string get_tag(std::string _tag)
@@ -251,23 +251,6 @@ struct Entity
             }
         }
 
-        // for(int i = 0; i < scripts.size(); i++)
-        // {
-        //     if(scripts.at(i)->name() == script_name)
-        //     {
-        //         Script* targ_script = scripts.at(i);
-
-        //         scripts.erase(scripts.begin() + i);
-
-        //         if(scripts.size() == 0)
-        //         {
-        //             EntityTracker::remove_entity(this);
-        //         }
-
-        //         return static_cast<T*>(targ_script);
-        //     }
-        // }
-    
         return nullptr;
     }
 
@@ -375,16 +358,34 @@ public:
     {
         for(Entity* e : EntityTracker::entities)
         {
-
             for(Script* s : e->scripts)
             {   
                 s->update();
             }
         }
+
+        // for(std::map<std::pair<int,int>, std::list<Entity*>>::iterator 
+        //     it = entity_positions.begin(); it != entity_positions.end();
+        //     it++)
+        // {
+        //     for(std::list<Entity*>::iterator list_it = it->second.begin();
+        //         list_it != it->second.end(); list_it++)
+        //     {
+        //         if((*list_it)->name == "Cursor")
+        //         {
+        //             std::cout << "Found Cursor\n";
+        //         }
+        //     }
+        // }
     }
 
     void add_entity(Entity* e, int x, int y)
     {
+        if(e->scripts.size() > 0)
+        {
+            EntityTracker::entities.push_back(e);
+        }
+
         e->entity_handler = this;
         entity_positions[{x, y}].push_back(e);
         sort_entities_at_position(x, y);
@@ -397,9 +398,13 @@ public:
 
     bool remove_entity(Entity* e, int x, int y)
     {
+        if(e->scripts.size() > 0)
+        {
+            EntityTracker::remove_entity(e);
+        }
+
         for(int i = 0; i < entity_positions[{x, y}].size(); i++)
         {
-
             for(std::list<Entity*>::iterator it = entity_positions
                 [{x, y}].begin(); it != entity_positions[{x, y}].end(); 
                 it++)
@@ -410,13 +415,6 @@ public:
                         return true;
                 }
             }
-
-            // if(entity_positions[{x, y}].at(i) == e)
-            // {
-            //     entity_positions[{x, y}].erase(
-            //         entity_positions[{x, y}].begin() + i);
-            //     return true;
-            // }
         }
         return false;
     }

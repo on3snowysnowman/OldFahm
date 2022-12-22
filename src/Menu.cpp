@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "Menus/Menu.h"
+#include "Debug.h"
 
 //______________________________MENU___________________________________________
 
@@ -9,10 +10,12 @@
 
 Menu::Menu() {}
 
-Menu::Menu(MenuHandler* _menu_handler, InputHandler* _input_handler)
+Menu::Menu(MenuHandler* _menu_handler, InputHandler* _input_handler,
+    TextureHandler* _texture_handler)
 {
     menu_handler = _menu_handler;
     input_handler = _input_handler;
+    texture_handler = _texture_handler;
 
     menu_handler->add_menu(this);
 }
@@ -75,6 +78,7 @@ void MenuHandler::deactivate_active_menu()
 bool MenuHandler::activate_menu(Menu* menu)
 {
     active_menus.push_back(menu);
+    menu->start();
     return true;
 }
 
@@ -86,6 +90,7 @@ bool MenuHandler::activate_menu(MenuID menu_id)
         if(m->get_menu_id() == menu_id)
         {
             active_menus.push_back(m);
+            m->start();
             return true;
         }
     }
@@ -95,4 +100,19 @@ bool MenuHandler::activate_menu(MenuID menu_id)
     return false;
 }
 
+Menu* MenuHandler::get_menu(MenuID menu_id)
+{
+    for(Menu* m : all_menus)
+    {
+        if(m->get_menu_id() == menu_id)
+        {
+            return m;
+        }
+    }
 
+    std::string message = "[WAR] MenuHandler.get_menu(MenuID menu_id) where "
+        "menu_id = " + std::to_string(menu_id) + " -> Failed to find menu of "
+        "specified type";
+
+    Debug::log(message);
+}

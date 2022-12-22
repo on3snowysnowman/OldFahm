@@ -17,7 +17,11 @@ public:
     void update() override;
     void render() override;
 
+    bool is_position_within_render_bounds(int x, int y);
+
     Entity* get_camera();
+
+    Tilemap* get_tilemap();
 
 private:
 

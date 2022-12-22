@@ -4,9 +4,9 @@
 // Constructors / Deconstructor
 
 PauseMenu::PauseMenu(MenuHandler* _menu_handler,
-    InputHandler* _input_handler, TextureHandler* texture_handler, 
+    InputHandler* _input_handler, TextureHandler* _texture_handler, 
     int start_x, int start_y, int end_x, int end_y) : 
-    Menu(_menu_handler, _input_handler)
+    Menu(_menu_handler, _input_handler, _texture_handler)
 {
     cursor_color = "BLUE";
 

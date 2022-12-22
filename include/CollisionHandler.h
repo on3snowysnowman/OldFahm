@@ -8,8 +8,27 @@
 
 struct CollisionHandler
 {
+    static bool is_traversable_without_collider(Entity* e, int x, int y)
+    {
+        std::list<Entity*> entities =
+            e->entity_handler->get_entities_at_position(x, y);
 
-    static bool is_traversable(Entity* e, int x, int y)
+        for(std::list<Entity*>::iterator it = entities.begin();
+            it != entities.end(); it++)
+        {
+            for(std::string tag : (*it)->tags)
+            {
+                if(tag == "NON_TRAVERSABLE")
+                {   
+                    return false;
+                }
+            }   
+        }
+
+        return true;
+    }
+
+    static bool is_traversable_with_collider(Entity* e, int x, int y)
     {
         std::list<Entity*> entities =
             e->entity_handler->get_entities_at_position(x, y);
@@ -41,10 +60,25 @@ struct CollisionHandler
             {
                 if(y_it != y || x_it != x)
                 {
-                    if(is_traversable(e, x_it, y_it))
+                    // Entity has a collider attatched to it
+
+                    if(e->has_component<ColliderComponent>())
+                    {
+                        if(is_traversable_with_collider(e, x_it, y_it))
+                        {
+                            available_positions.push_back({x_it, y_it});
+                        }
+
+                        continue;
+                    }
+
+                    // Entity does not have a collider
+
+                    if(is_traversable_without_collider(e, x_it, y_it))
                     {
                         available_positions.push_back({x_it, y_it});
                     }
+
                 }
             }
         }

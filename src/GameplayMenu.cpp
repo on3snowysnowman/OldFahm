@@ -5,12 +5,12 @@
 // Constructors / Deconstructor
 
 GameplayMenu::GameplayMenu(MenuHandler* _menu_handler, 
-    InputHandler* _input_handler, TextureHandler* texture_handler, 
+    InputHandler* _input_handler, TextureHandler* _texture_handler, 
     Tilemap* _tilemap, int start_x, int start_y, int end_x, int end_y) :
-    Menu(_menu_handler, _input_handler)
+    Menu(_menu_handler, _input_handler, _texture_handler)
 {
     tilemap = _tilemap;
-    tilemap_window = new TilemapWindow(texture_handler, tilemap, 
+    tilemap_window = new TilemapWindow(_texture_handler, tilemap, 
         start_x, start_y, end_x, end_y);
 
     menu_id = GAMEPLAY;
@@ -33,6 +33,13 @@ void GameplayMenu::update()
             case SDLK_ESCAPE:
 
                 menu_handler->activate_menu(PAUSE);
+                input_handler->set_delay(SDLK_ESCAPE, -1);
+                break;
+            
+            case SDLK_f:
+
+                menu_handler->activate_menu(CURSOR);
+                input_handler->set_delay(SDLK_f, -1);
                 break;
         }
     }
@@ -48,37 +55,48 @@ void GameplayMenu::start() {}
 void GameplayMenu::init_tilemap()
 {
     Entity* dirt = create_generic_entity("Dirt", 0, 0, '.', "BROWN", 0, false);
+    Entity* grass = create_generic_entity("Grass", 0, 0,
+        '\'', "GREEN", 1, false);
     Entity* player = create_generic_entity("Player", 0, 0, 'P', "BLUE", 
         20, true);
+    Entity* oak_tree = create_generic_entity("Oak Tree", 10, 10, 'T', "TAN",
+        10, true);
+
     player->add_script<PlayerController>(input_handler);
     player->add_script<CameraTrack>(tilemap_window->get_camera());
 
     tilemap->fill_tilemap(dirt);
-    // tilemap->fill_tilemap(grass);
+    tilemap->fill_tilemap(grass);
 
-    for(int y = 0; y < tilemap->get_height(); y++)
-    {
-        for(int x = 0; x < tilemap->get_width(); x++)
-        {
-            int ran_num = Random::get_random_num(0, 2);
+    // for(int y = 0; y < tilemap->get_height(); y++)
+    // {
+    //     for(int x = 0; x < tilemap->get_width(); x++)
+    //     {
+    //         int ran_num = Random::get_random_num(0, 1);
 
-            char symbol = '~';
+    //         char symbol = '\'';
 
-            if(ran_num == 1)
-            {
-                symbol = '\"';
-            }
+    //         if(ran_num == 1)
+    //         {
+    //             symbol = '\"';
+    //         }
 
-            else if(ran_num == 2)
-            {
-                symbol = '\'';
-            }
+    //         // else if(ran_num == 2)
+    //         // {
+    //         //     symbol = '\'';
+    //         // }
 
-            Entity* grass = create_generic_entity("Grass", 0, 0,
-                symbol, "GREEN", 1, false);
-            tilemap->add_entity(grass, x, y);
-        }
-    }
+            // Entity* grass = create_generic_entity("Grass", 0, 0,
+            //     symbol, "GREEN", 1, false);
+    //         tilemap->add_entity(grass, x, y);
+    //     }
+    // }
 
     tilemap->add_entity(player, 5, 5);
+    tilemap->add_entity(oak_tree, 10, 10);
+}
+
+TilemapWindow* GameplayMenu::get_tilemap_window()
+{
+    return tilemap_window;
 }
