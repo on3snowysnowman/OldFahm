@@ -85,84 +85,85 @@ struct PlayerController : public Script
         
         if(active_keys.size() == 0) return;
 
-        int first_key_id = active_keys.at(0)->id;
-
-        switch(first_key_id)
+        for(Key* k : active_keys)
         {
-            case SDLK_w:
+            switch(k->id)
+            {
+                case SDLK_w:
 
-                modify_position(t_comp, 0, -1);
-                input_handler->set_delay(first_key_id);
-                break;
+                    modify_position(t_comp, 0, -1);
+                    input_handler->set_delay(k->id);
+                    break;
 
-            case SDLK_e:
+                case SDLK_e:
 
-                modify_position(t_comp, 1, -1);
-                input_handler->set_delay(first_key_id);
-                break;
+                    modify_position(t_comp, 1, -1);
+                    input_handler->set_delay(k->id);
+                    break;
 
-            case SDLK_d:
+                case SDLK_d:
 
-                modify_position(t_comp, 1, 0);
-                input_handler->set_delay(first_key_id);
-                break;
+                    modify_position(t_comp, 1, 0);
+                    input_handler->set_delay(k->id);
+                    break;
 
-            case SDLK_c:
+                case SDLK_c:
 
-                modify_position(t_comp, 1, 1);
-                input_handler->set_delay(first_key_id);
-                break;
+                    modify_position(t_comp, 1, 1);
+                    input_handler->set_delay(k->id);
+                    break;
 
-            case SDLK_s:
+                case SDLK_s:
 
-                modify_position(t_comp, 0, 1);
-                input_handler->set_delay(first_key_id);
-                break;
-            
-            case SDLK_x:
+                    modify_position(t_comp, 0, 1);
+                    input_handler->set_delay(k->id);
+                    break;
+                
+                case SDLK_x:
 
-                modify_position(t_comp, 0, 1);
-                input_handler->set_delay(first_key_id);
-                break;
+                    modify_position(t_comp, 0, 1);
+                    input_handler->set_delay(k->id);
+                    break;
 
-            case SDLK_z:
+                case SDLK_z:
 
-                modify_position(t_comp, -1, 1);
-                input_handler->set_delay(first_key_id);
-                break;
+                    modify_position(t_comp, -1, 1);
+                    input_handler->set_delay(k->id);
+                    break;
 
-            case SDLK_a:
+                case SDLK_a:
 
-                modify_position(t_comp, -1, 0);
-                input_handler->set_delay(first_key_id);
-                break;
+                    modify_position(t_comp, -1, 0);
+                    input_handler->set_delay(k->id);
+                    break;
 
-            case SDLK_q:
+                case SDLK_q:
 
-                modify_position(t_comp, -1, -1);
-                input_handler->set_delay(first_key_id);
-                break;
+                    modify_position(t_comp, -1, -1);
+                    input_handler->set_delay(k->id);
+                    break;
 
-            case 't':
+                case 't':
 
-                modify_position(t_comp, -(t_comp->x_pos - 1), 
-                    -(t_comp->y_pos - 1));
-                input_handler->set_delay(first_key_id);
-                break;
+                    modify_position(t_comp, -(t_comp->x_pos - 1), 
+                        -(t_comp->y_pos - 1));
+                    input_handler->set_delay(k->id);
+                    break;
 
-            case 'h':
+                case 'h':
 
-                if(entity->has_script<HarvestPlant>())
-                {
-                    HarvestPlant* h_script = entity->get_script<
-                        HarvestPlant>();
-                    if(h_script->harvest())
-                    { 
-                        input_handler->set_delay(first_key_id);
+                    if(entity->has_script<HarvestPlant>())
+                    {
+                        HarvestPlant* h_script = entity->get_script<
+                            HarvestPlant>();
+                        if(h_script->harvest())
+                        { 
+                            input_handler->set_delay(k->id);
+                        }
                     }
-                }
 
-                break;
+                    break;
+            }
         }
     }
 };

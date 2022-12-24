@@ -115,6 +115,16 @@ struct Entity
         }
     }
 
+    bool has_tag(std::string _tag)
+    {
+        for(std::string t : tags)
+        {
+            if(t == _tag) return true;
+        }
+
+        return false;
+    }
+
     template<typename T>
     bool has_script()
     {
@@ -168,20 +178,11 @@ struct Entity
         // }
     }
 
-    std::string get_tag(std::string _tag)
-    {
-        for(std::string t : tags)
-        {
-            if(t == _tag) return t;
-        }
-
-        return std::string{};
-    }
-
     template <typename T, typename... TArgs>
     T* add_component(TArgs&&... mArgs)
     {
         T* new_comp(new T(std::forward<TArgs>(mArgs)...));
+
         new_comp->entity = this;
         components[T::name()] = new_comp;
 

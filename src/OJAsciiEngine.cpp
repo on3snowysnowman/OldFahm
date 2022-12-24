@@ -19,23 +19,26 @@ ojae::OJAsciiEngine::OJAsciiEngine(const char* title)
 
     nlohmann::json settings_json = Jloader::get("data/ojae_settings.json");
 
-    #ifdef _WIN32
+    if(settings_json["fullscreen"])
+    {
+        #ifdef _WIN32
 
-    RECT desktop;
+        RECT desktop;
 
-    // Get a handle to the desktop window
-    const HWND hDesktop = GetDesktopWindow();
-    GetWindowRect(hDesktop, &desktop);
-    screen_width = desktop.right;
-    screen_height = desktop.bottom;
-    
-    #else
+        // Get a handle to the desktop window
+        const HWND hDesktop = GetDesktopWindow();
+        GetWindowRect(hDesktop, &desktop);
+        screen_width = desktop.right;
+        screen_height = desktop.bottom;
 
-    screen_width = settings_json["screen width"];
-    screen_height = settings_json["screen height"];
+        #endif
+    }
 
-    #endif
-
+    else
+    {
+        screen_width = settings_json["screen width"];
+        screen_height = settings_json["screen height"];
+    }
 
     if(screen_width < 500 ||
         screen_height < 500)

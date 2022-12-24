@@ -11,7 +11,8 @@ enum MenuID
     BASE,
     GAMEPLAY,
     PAUSE,
-    CURSOR
+    CURSOR,
+    INVENTORY
 };
 
 class MenuHandler;

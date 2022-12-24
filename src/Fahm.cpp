@@ -40,6 +40,12 @@ void Fahm::start()
     tile_display_menu = new TileDisplayMenu(menu_handler, input_handler, 
         texture_handler, 0, 0, screen_width, screen_height);
 
+    inventory_menu = new InventoryMenu(menu_handler, input_handler, 
+        texture_handler,
+        gameplay_menu->get_player()->get_component<StorageComponent>(), 
+        0, 0, screen_width, screen_height
+    );
+
     menu_handler->activate_menu(gameplay_menu);
 
     loading_screen();

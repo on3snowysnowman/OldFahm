@@ -39,12 +39,12 @@ struct HarvestPlant : public Script
             entity->entity_handler->get_entities_at_position(
                 t_comp->x_pos, t_comp->y_pos))
         {
-            std::string targ_tag = e->get_tag("HARVESTABLE");
 
-            if(targ_tag.size() > 0)
+            if(e->has_tag("HARVESTABLE"))
             {
                 entity->entity_handler->remove_entity(e, t_comp->x_pos, 
                     t_comp->y_pos);
+
                 s_comp->add_entity(e);
                 return true;
             }

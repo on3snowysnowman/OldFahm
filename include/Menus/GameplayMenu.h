@@ -21,9 +21,13 @@ public:
 
     void init_tilemap();
 
+    Entity* get_player();
+
     TilemapWindow* get_tilemap_window();
 
 private:
+
+    Entity* player;
 
     Tilemap* tilemap;
 

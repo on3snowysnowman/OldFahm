@@ -94,8 +94,12 @@ bool MenuHandler::activate_menu(MenuID menu_id)
             return true;
         }
     }
+    
+    std::string message = "[WAR] MenuHandler.activate_menu(MenuID menu_id) "
+        "where \"menu_id\" is " + std::to_string(menu_id) + " -> Failed to find menu of "
+        "specified type";
 
-    exit(0);
+    Debug::log(message);
 
     return false;
 }

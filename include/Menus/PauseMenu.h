@@ -12,7 +12,7 @@ class PauseMenu : public Menu
 public:
 
     PauseMenu(MenuHandler* _menu_handler, InputHandler* _input_handler,
-        TextureHandler* texture_handler, 
+        TextureHandler* _texture_handler, 
         int start_x, int start_y, int end_x, int end_y);
 
     void update() override;
