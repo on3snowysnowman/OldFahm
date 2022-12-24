@@ -13,7 +13,6 @@ add_library(Fahm
     src/Fahm.cpp
     src/GameplayMenu.cpp
     src/InputHandler.cpp
-    src/InventoryMenu.cpp
     src/Menu.cpp
     src/MenuTools.cpp
     src/OJAsciiEngine.cpp
@@ -22,6 +21,7 @@ add_library(Fahm
     src/TextureHandler.cpp
     src/TileDisplayMenu.cpp
     src/Tilemap.cpp
+    src/TilemapRenderer.cpp
     src/TilemapWindow.cpp
 )
 

@@ -119,4 +119,6 @@ Menu* MenuHandler::get_menu(MenuID menu_id)
         "specified type";
 
     Debug::log(message);
+
+    return nullptr;
 }

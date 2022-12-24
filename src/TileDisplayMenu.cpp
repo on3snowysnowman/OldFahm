@@ -20,7 +20,7 @@ TileDisplayMenu::TileDisplayMenu(MenuHandler* _menu_handler,
         
     tilemap = tilemap_window->get_tilemap();
 
-    cursor = create_generic_entity("Cursor", 0, 0, 'X', "WHITE", 21,
+    cursor = create_generic_entity("Cursor", 0, 0, CURSOR_TILE, 21,
         false);
     cursor->add_script<CursorController>(input_handler, tilemap_window);
 
@@ -51,9 +51,8 @@ void TileDisplayMenu::update()
 
         if(targ_e_s_comp->priority < 0) continue;
 
-        tile_display_window->add_ch(targ_e_s_comp->symbol, 
-            targ_e_s_comp->color);
-        tile_display_window->add_str(" : ");
+        // tile_display_window->add_ch(targ_e_s_comp->symbol, "WHITE");
+        // tile_display_window->add_str(" : ");
         tile_display_window->add_str(e->name);
         tile_display_window->add_new_line();
     }

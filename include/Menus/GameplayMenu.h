@@ -5,6 +5,7 @@
 #include "../Windows/TilemapWindow.h"
 #include "../TextureHandler.h"
 #include "../InputHandler.h"
+#include "../Components/StorageComponent.h"
 
 class GameplayMenu : public Menu
 {
@@ -27,11 +28,14 @@ public:
 
 private:
 
+    StorageComponent* player_inventory;
     Entity* player;
 
     Tilemap* tilemap;
 
+    BaseWindow* inventory_window;
     TilemapWindow* tilemap_window;
+
 
 };
 

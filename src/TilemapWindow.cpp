@@ -1,6 +1,7 @@
 #include "Windows/TilemapWindow.h"
 #include "Components/TransformComponent.h"
 #include "Components/SPriteComponent.h"
+#include "TileID.h"
 
 
 // Constructors / Deconstructor
@@ -20,10 +21,11 @@ TilemapWindow::TilemapWindow(TextureHandler* _texture_handler,
     BaseWindow(_texture_handler, _start_x, _start_y, _end_x, _end_y, false)
 {
     tilemap = _tilemap;
+    tilemap_renderer = new TilemapRenderer(_texture_handler);
     camera_radius = 10;
     camera = new Entity("Camera");
     camera->add_component<TransformComponent>(0, 0);
-    camera->add_component<SpriteComponent>('%', "WHITE", -1);
+    camera->add_component<SpriteComponent>();
     tilemap->add_entity(camera, 0, 0);
 }
 
@@ -39,7 +41,9 @@ void TilemapWindow::update()
 
 void TilemapWindow::render()
 {
-    clear_content();
+    // clear_content();
+
+    tilemap_renderer->clear();
 
     draw_border();
 
@@ -49,62 +53,94 @@ void TilemapWindow::render()
     int tilemap_width = tilemap->get_width() - 1;
     int tilemap_height = tilemap->get_height() - 1;
 
-    int start_x = t_comp->x_pos - camera_radius; 
-    int start_y = t_comp->y_pos - camera_radius;
-    int end_x = t_comp->x_pos + camera_radius;
-    int end_y = t_comp->y_pos + camera_radius;
+    int camera_start_x = t_comp->x_pos - camera_radius; 
+    int camera_start_y = t_comp->y_pos - camera_radius;
+    int camera_end_x = t_comp->x_pos + camera_radius;
+    int camera_end_y = t_comp->y_pos + camera_radius;
 
     bool modified_start_x = false;
     bool modified_start_y = false;
 
-    if(start_x < 0) 
+    if(camera_start_x < 0) 
     {
         modified_start_x = true;
 
-        start_x = 0;
+        camera_start_x = 0;
         
-        end_x += (camera_radius - t_comp->x_pos);
+        camera_end_x += (camera_radius - t_comp->x_pos);
     }
 
-    if(end_x > tilemap_width)
+    if(camera_end_x > tilemap_width)
     {
         if(!modified_start_x)
         {
-            start_x -= end_x - tilemap_width;
+            camera_start_x -= camera_end_x - tilemap_width;
         }
 
-        end_x = tilemap_width;
+        camera_end_x = tilemap_width;
     }
 
-    if(start_y < 0) 
+    if(camera_start_y < 0) 
     {
         modified_start_y= true;
 
-        start_y = 0;
+        camera_start_y = 0;
         
-        end_y += (camera_radius - t_comp->y_pos);
+        camera_end_y += (camera_radius - t_comp->y_pos);
     }
 
-    if(end_y > tilemap_height)
+    if(camera_end_y > tilemap_height)
     {
 
         if(!modified_start_y)
         {
-            start_y -= end_y - tilemap_height;
+            camera_start_y -= camera_end_y - tilemap_height;
         }
 
-        end_y = tilemap_height;
+        camera_end_y = tilemap_height;
     }
 
-    for(DisplayCharacter c : tilemap->get_display(start_x, start_y, 
-        end_x, end_y))
+    int tile_size = tilemap_renderer->get_tile_size();
+
+    int cursor_x = start_x;
+    int cursor_y = start_y;
+
+    int current_tiles_per_row_count = 1;
+    int num_tiles_per_row = camera_end_x - camera_start_x + 1;
+
+
+    for(TileID tile_id : tilemap->get_display(camera_start_x, camera_start_y, 
+        camera_end_x, camera_end_y))
     {
-        add_ch(int(c.symbol), c.color);
-        
-        if(c.symbol != '\n') add_ch(' ');
+        tilemap_renderer->add(cursor_x, cursor_y, tile_id);
+
+        current_tiles_per_row_count++;
+
+        if(current_tiles_per_row_count == num_tiles_per_row + 1)
+        {
+            current_tiles_per_row_count = 1;
+
+            cursor_x = start_x;
+            cursor_y += tile_size;
+            continue;
+        }
+
+        cursor_x += tile_size;       
     }
 
-    text_handler->draw();
+    // for(std::vector<TileID> vector_of_ids : tilemap->get_display(start_x, start_y, 
+    //     end_x, end_y))
+    // {
+    //     // add_ch(int(c.symbol), c.color);
+        
+    //     // if(c.symbol != '\n') add_ch(' ');
+
+        
+    // }
+
+    // text_handler->draw();
+
+    tilemap_renderer->draw();
 }
 
 bool TilemapWindow::is_position_within_render_bounds(int x, int y)
@@ -112,57 +148,59 @@ bool TilemapWindow::is_position_within_render_bounds(int x, int y)
     TransformComponent* t_comp = camera->get_component<
         TransformComponent>();
 
-    int tilemap_width = tilemap->get_width() - 1;
+        int tilemap_width = tilemap->get_width() - 1;
     int tilemap_height = tilemap->get_height() - 1;
 
-    int start_x = t_comp->x_pos - camera_radius; 
-    int start_y = t_comp->y_pos - camera_radius;
-    int end_x = t_comp->x_pos + camera_radius;
-    int end_y = t_comp->y_pos + camera_radius;
+    int camera_start_x = t_comp->x_pos - camera_radius; 
+    int camera_start_y = t_comp->y_pos - camera_radius;
+    int camera_end_x = t_comp->x_pos + camera_radius;
+    int camera_end_y = t_comp->y_pos + camera_radius;
 
     bool modified_start_x = false;
     bool modified_start_y = false;
 
-    if(start_x < 0) 
+    if(camera_start_x < 0) 
     {
         modified_start_x = true;
 
-        start_x = 0;
+        camera_start_x = 0;
         
-        end_x += (camera_radius - t_comp->x_pos);
+        camera_end_x += (camera_radius - t_comp->x_pos);
     }
 
-    if(end_x > tilemap_width)
+    if(camera_end_x > tilemap_width)
     {
         if(!modified_start_x)
         {
-            start_x -= end_x - tilemap_width;
+            camera_start_x -= camera_end_x - tilemap_width;
         }
 
-        end_x = tilemap_width;
+        camera_end_x = tilemap_width;
     }
 
-    if(start_y < 0) 
+    if(camera_start_y < 0) 
     {
         modified_start_y= true;
 
-        start_y = 0;
+        camera_start_y = 0;
         
-        end_y += (camera_radius - t_comp->y_pos);
+        camera_end_y += (camera_radius - t_comp->y_pos);
     }
 
-    if(end_y > tilemap_height)
+    if(camera_end_y > tilemap_height)
     {
 
         if(!modified_start_y)
         {
-            start_y -= end_y - tilemap_height;
+            camera_start_y -= camera_end_y - tilemap_height;
         }
 
-        end_y = tilemap_height;
+        camera_end_y = tilemap_height;
     }
 
-    if(x < start_x || x > end_x || y < start_y || y > end_y) { return false; }
+
+    if(x < camera_start_x || x > camera_end_x || 
+        y < camera_start_y || y > camera_end_y) { return false; }
 
     return true;
 

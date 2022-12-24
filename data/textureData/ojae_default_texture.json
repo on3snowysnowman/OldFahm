@@ -1,0 +1,5 @@
+{
+    "tile_size": 16,
+    "tiles_per_row": 8,
+    "texture_path": "assets/tileTextures/ojae_default_texture.png"
+}

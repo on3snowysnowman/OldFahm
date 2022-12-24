@@ -3,30 +3,28 @@
 #include <string>
 
 #include "Component.h"
+#include "TileID.h"
 
 struct SpriteComponent : public Component
 {
-    char symbol;
-    std::string color;
+    TileID symbol;
     int priority;
     
     SpriteComponent()
     {
-        symbol = ' ';
-        color = "WHITE";
-        priority = 0;
+        symbol = NO_ID;
+        priority = -1;
     }
 
-    SpriteComponent(char _symbol, std::string _color, int _priority) 
+    SpriteComponent(TileID _symbol, int _priority) 
     {
         symbol = _symbol;
-        color = _color;
         priority = _priority;
     }
 
     Component* clone() override
     {
-        return new SpriteComponent(symbol, color, priority);
+        return new SpriteComponent(symbol, priority);
     }
 
     static std::string name()

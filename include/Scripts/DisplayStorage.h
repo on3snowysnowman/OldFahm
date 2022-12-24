@@ -37,7 +37,7 @@ struct DisplayStorage : public Script
             SpriteComponent* sprite_comp = 
                 e->get_component<SpriteComponent>();
 
-            text_to_output->push_back(Text(e->name, sprite_comp->color));
+            text_to_output->push_back(Text(e->name, "WHITE"));
         }
     }
 

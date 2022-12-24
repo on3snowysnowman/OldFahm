@@ -6,6 +6,7 @@
 #include "Entity.h"
 #include "Debug.h"
 #include "DisplayCharacter.h"
+#include "TileID.h"
 
 class Tilemap
 {
@@ -25,7 +26,7 @@ public:
     int get_width();
     int get_height();
 
-    std::vector<DisplayCharacter> get_display(int start_x, int start_y,
+    std::vector<TileID> get_display(int start_x, int start_y,
         int end_x, int end_y);
     std::list<Entity*> get_entities_at_position(int x, int y);
     
@@ -39,7 +40,3 @@ private:
     EntityHandler* entity_handler;
 };
 
-struct TilemapHandler
-{
-    static Tilemap* active_tilemap;
-};

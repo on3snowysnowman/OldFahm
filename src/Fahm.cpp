@@ -40,17 +40,10 @@ void Fahm::start()
     tile_display_menu = new TileDisplayMenu(menu_handler, input_handler, 
         texture_handler, 0, 0, screen_width, screen_height);
 
-    inventory_menu = new InventoryMenu(menu_handler, input_handler, 
-        texture_handler,
-        gameplay_menu->get_player()->get_component<StorageComponent>(), 
-        0, 0, screen_width, screen_height
-    );
-
     menu_handler->activate_menu(gameplay_menu);
 
-    loading_screen();
-
     startup_screen();
+    loading_screen();
     start_OJAE(); 
 }
 
@@ -62,24 +55,35 @@ void Fahm::startup_screen()
     full_window->add_str("Fahm - VERSION .1\n");
     full_window->add_str("Press Escape to Continue...");
 
+    clear_screen();
+
     full_window->render();
 
-    std::vector<Key*> pressed_keys = input_handler->get_active_keys();
+    draw_to_screen();
 
-    for(Key* k : pressed_keys)
+    while(true)
     {
-        if(k->id == SDLK_ESCAPE)
-        {
-            return;
-        }
-    }
 
-    SDL_Delay(16.67);
+        while(SDL_PollEvent(&event))
+        {
+            if(event.type == SDL_KEYDOWN)
+            {
+                if(event.key.keysym.sym == SDLK_ESCAPE)
+                {
+                    return;
+                }
+            }
+        }
+
+        SDL_Delay(16.67);
+    }
 }
 
 void Fahm::loading_screen() 
 {
     clear_screen();
+
+    full_window->clear_content();
 
     full_window->add_str("Loading...");
     full_window->render();

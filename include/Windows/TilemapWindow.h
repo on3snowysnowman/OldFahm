@@ -3,6 +3,7 @@
 #include "BaseWindow.h"
 #include "../Tilemap.h"
 #include "../Entity.h"
+#include "../TilemapRenderer.h"
 
 class TilemapWindow : public BaseWindow
 {
@@ -30,4 +31,5 @@ private:
     Entity* camera;
     Tilemap* tilemap;
 
+    TilemapRenderer* tilemap_renderer;
 };

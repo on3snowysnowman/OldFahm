@@ -52,32 +52,30 @@ struct StorageComponent : public Component
         return false;
     }
 
-    std::vector<std::pair<Text, int>> get_storage_display()
+    std::vector<std::pair<std::string, int>> get_storage_display()
     {
-        std::vector<std::pair<Text, int>> display;
+        std::vector<std::pair<std::string, int>> display;
 
-        std::map<std::string, std::pair<int, std::string>> num_entities;
+        std::map<std::string, int> num_entities;
 
         for(Entity* e : stored_entities)
         {
             if(num_entities.count(e->name) != 0)
             {
-                num_entities[e->name].first++;
+                num_entities[e->name]++;
                 continue;
             }
 
             SpriteComponent* targ_e_s_comp = e->get_component<
                 SpriteComponent>();
 
-            num_entities.emplace(e->name, std::pair<int, std::string>{1, 
-                targ_e_s_comp->color});
+            num_entities.emplace(e->name, 1);
         }
 
-        for(std::map<std::string, std::pair<int, std::string>>::iterator it = num_entities.begin();
+        for(std::map<std::string, int>::iterator it = num_entities.begin();
             it != num_entities.end(); it++)
         {
-            display.push_back(std::pair<Text, int>(Text(it->first,
-                it->second.second), it->second.first));
+            display.push_back(std::pair<std::string, int>(it->first, it->second));
         }
 
         return display;

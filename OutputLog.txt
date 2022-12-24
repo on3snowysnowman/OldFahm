@@ -1,12 +1,12 @@
-579 ms: [OUT] Loading Color: BLUE
-580 ms: [OUT] Loading Color: BROWN
-582 ms: [OUT] Loading Color: DARK_GRAY
-583 ms: [OUT] Loading Color: GREEN
-583 ms: [OUT] Loading Color: LIGHT_GRAY
-584 ms: [OUT] Loading Color: ORANGE
-585 ms: [OUT] Loading Color: PURPLE
-586 ms: [OUT] Loading Color: RED
-587 ms: [OUT] Loading Color: TAN
-588 ms: [OUT] Loading Color: WHITE
-589 ms: [OUT] Loading Color: YELLOW
-590 ms: [OUT] OJAsciiEngine Initialized
+335 ms: [OUT] Loading Color: BLUE
+336 ms: [OUT] Loading Color: BROWN
+337 ms: [OUT] Loading Color: DARK_GRAY
+337 ms: [OUT] Loading Color: GREEN
+338 ms: [OUT] Loading Color: LIGHT_GRAY
+338 ms: [OUT] Loading Color: ORANGE
+339 ms: [OUT] Loading Color: PURPLE
+340 ms: [OUT] Loading Color: RED
+340 ms: [OUT] Loading Color: TAN
+341 ms: [OUT] Loading Color: WHITE
+342 ms: [OUT] Loading Color: YELLOW
+343 ms: [OUT] OJAsciiEngine Initialized

@@ -27,7 +27,6 @@ private:
     GameplayMenu* gameplay_menu;
     PauseMenu* pause_menu;
     TileDisplayMenu* tile_display_menu;
-    InventoryMenu* inventory_menu;
 
     void startup_screen();
     void loading_screen();

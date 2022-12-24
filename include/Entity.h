@@ -14,6 +14,7 @@
 #include "Components/ColliderComponent.h"
 #include "Debug.h"
 #include "Random.h"
+#include "TileID.h"
 
 struct Entity;
 
@@ -439,11 +440,11 @@ public:
 };
 
 static Entity* create_generic_entity(std::string name, int x_pos, int y_pos,
-    char symbol, std::string color, int rendering_priority, bool add_collider)
+    TileID tile_id, int rendering_priority, bool add_collider)
 {
     Entity* e = new Entity(name);
     e->add_component<TransformComponent>(x_pos, y_pos);
-    e->add_component<SpriteComponent>(symbol, color, rendering_priority);
+    e->add_component<SpriteComponent>(tile_id, rendering_priority);
     
     if(add_collider)
     {

@@ -35,7 +35,7 @@ Tilemap::Tilemap(int _width, int _height)
 
     Entity* edge_map_collider = new Entity("EDGE MAP COLLIDER");
     edge_map_collider->add_component<TransformComponent>(0, 0);
-    edge_map_collider->add_component<SpriteComponent>('X', "RED", -1);
+    edge_map_collider->add_component<SpriteComponent>();
     edge_map_collider->add_component<ColliderComponent>();
     edge_map_collider->add_tag("NON_TRAVERSABLE");
 
@@ -130,16 +130,15 @@ int Tilemap::get_width() { return width; }
 
 int Tilemap::get_height() { return height; }
 
-std::vector<DisplayCharacter> Tilemap::get_display(int start_x, int start_y,
+std::vector<TileID> Tilemap::get_display(int start_x, int start_y,
     int end_x, int end_y)
 {
-    std::vector<DisplayCharacter> visible_characters;
+    std::vector<TileID> visible_tiles;
 
     for(int y = start_y; y <= end_y; y++)
     {
         for(int x = start_x; x <= end_x; x++)
         {
-
             std::list<Entity*> entities_at_position =
                 entity_handler->get_entities_at_position(x, y);
 
@@ -147,27 +146,28 @@ std::vector<DisplayCharacter> Tilemap::get_display(int start_x, int start_y,
                 !entities_at_position.front()->
                 has_component<SpriteComponent>())
             {
-                visible_characters.push_back(DisplayCharacter(
-                    '%', "WHITE" 
-                ));
+                visible_tiles.push_back(NO_ID);
+
+                // visible_characters.push_back(DisplayCharacter(
+                //     '%', "WHITE" 
+                // ));
                 continue;
             }
-
-
 
             SpriteComponent* s_component = 
                 entities_at_position.front() ->
                 get_component<SpriteComponent>();
+            visible_tiles.push_back(s_component->symbol);
 
-            visible_characters.push_back(DisplayCharacter(
-                s_component->symbol, s_component->color
-            ));
+            // visible_characters.push_back(DisplayCharacter(
+            //     s_component->symbol, s_component->color
+            // ));
         }
 
-        visible_characters.push_back(DisplayCharacter('\n', "WHITE"));
+        // visible_characters.push_back(DisplayCharacter('\n', "WHITE"));
     }
 
-    return visible_characters;
+    return visible_tiles;
 }
 
 std::list<Entity*> Tilemap::get_entities_at_position(int x, int y)
@@ -176,8 +176,3 @@ std::list<Entity*> Tilemap::get_entities_at_position(int x, int y)
 }
 
 EntityHandler* Tilemap::get_entity_handler() { return entity_handler; }
-
-
-// ___________________________TilemapHandler___________________________________
-
-Tilemap* TilemapHandler::active_tilemap = nullptr;
