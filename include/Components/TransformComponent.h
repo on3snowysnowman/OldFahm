@@ -24,6 +24,17 @@ struct TransformComponent : public Component
         return new TransformComponent(x_pos, y_pos);
     }
 
+    nlohmann::json serialize() override
+    {
+        nlohmann::json save_json;
+
+        save_json["name"] = name();
+        save_json["x_pos"] = x_pos;
+        save_json["y_pos"] = y_pos;
+
+        return save_json;
+    }
+
     static std::string name()
     {
         return "TransformComponent";

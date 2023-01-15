@@ -105,35 +105,54 @@ void TilemapWindow::render()
     int cursor_x = start_x;
     int cursor_y = start_y;
 
-    int current_tiles_per_row_count = 1;
-    int num_tiles_per_row = camera_end_x - camera_start_x + 1;
-
-
-    for(TileID tile_id : tilemap->get_display(camera_start_x, camera_start_y, 
-        camera_end_x, camera_end_y))
+    for(int y = camera_start_y; y < camera_end_y; y++)
     {
-        tilemap_renderer->add(cursor_x, cursor_y, tile_id);
-
-        current_tiles_per_row_count++;
-
-        if(current_tiles_per_row_count == num_tiles_per_row + 1)
+        for(int x = camera_start_x; x < camera_end_x; x++)
         {
-            current_tiles_per_row_count = 1;
+            for(Entity* e : tilemap->get_entity_handler()->
+                get_entities_at_position(x, y))
+            {
+                SpriteComponent* e_s_comp = e->get_component<SpriteComponent>();
 
-            cursor_x = start_x;
-            cursor_y += tile_size;
-            continue;
+                if(e_s_comp->priority < 0) continue;
+
+                TileID e_tile_id = e_s_comp->tile_id;
+                tilemap_renderer->add(cursor_x, cursor_y, e_tile_id);
+            }
+
+            cursor_x += tile_size;
         }
 
-        cursor_x += tile_size;       
+        cursor_x = start_x;
+        cursor_y += tile_size;
     }
+
+
+    // for(TileID tile_id : tilemap->get_display(camera_start_x, camera_start_y, 
+    //     camera_end_x, camera_end_y))
+    // {
+    //     tilemap_renderer->add(cursor_x, cursor_y, tile_id);
+
+    //     current_tiles_per_row_count++;
+
+    //     if(current_tiles_per_row_count == num_tiles_per_row + 1)
+    //     {
+    //         current_tiles_per_row_count = 1;
+
+    //         cursor_x = start_x;
+    //         cursor_y += tile_size;
+    //         continue;
+    //     }
+
+    //     cursor_x += tile_size;       
+    // }
 
     // for(std::vector<TileID> vector_of_ids : tilemap->get_display(start_x, start_y, 
     //     end_x, end_y))
     // {
-    //     // add_ch(int(c.symbol), c.color);
+    //     // add_ch(int(c.tile_id), c.color);
         
-    //     // if(c.symbol != '\n') add_ch(' ');
+    //     // if(c.tile_id != '\n') add_ch(' ');
 
         
     // }

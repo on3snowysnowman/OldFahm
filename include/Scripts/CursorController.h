@@ -56,16 +56,16 @@ struct CursorController : public Script
             return;
         }
 
-        // Update the TransformComponent's Position
-        t_comp->y_pos = y_pos + y_delta;
-        t_comp->x_pos = x_pos + x_delta;
-
         // Update the Entity's EntityHandler's position of where 
         // the Entity this Component is attatched to lies
         entity->entity_handler->remove_entity(
-            entity, x_pos, y_pos);
+            entity);
         entity->entity_handler->add_entity(
             entity, x_pos + x_delta, y_pos + y_delta);
+
+        // // Update the TransformComponent's Position
+        // t_comp->y_pos = y_pos + y_delta;
+        // t_comp->x_pos = x_pos + x_delta;
     }
 
     /**

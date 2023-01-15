@@ -1,5 +1,7 @@
 #pragma once
 
+#include <nlohmann/json.hpp>
+
 struct Entity;
 
 struct Component
@@ -9,6 +11,7 @@ struct Component
     Component() {}
 
     virtual Component* clone() { return new Component(); }
+    virtual nlohmann::json serialize() {}
 
     static std::string name() { return "Component"; }
 

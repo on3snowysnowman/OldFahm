@@ -23,7 +23,6 @@ Fahm::~Fahm() {}
 
 void Fahm::start()
 {
-
     full_window = new BaseWindow(texture_handler, 0, 0, screen_width,
         screen_height, false);
 

@@ -4,18 +4,18 @@
 
 struct DisplayCharacter
 {
-    int symbol;
+    int tile_id;
     std::string color;
 
     DisplayCharacter()
     {
-        symbol = ' ';
+        tile_id = ' ';
         color = "White";
     }
 
-    DisplayCharacter(int _symbol, std::string _color)
+    DisplayCharacter(int _tile_id, std::string _color)
     {
-        symbol = _symbol;
+        tile_id = _tile_id;
         color = _color;
     }
 };

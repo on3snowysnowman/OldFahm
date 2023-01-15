@@ -16,6 +16,11 @@
 },
 {
   "directory": "C:/Users/on3sn/OneDrive/Desktop/Fahm-1/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Users/on3sn/OneDrive/Desktop/Fahm-1/include -IC:/Users/on3sn/OneDrive/Desktop/Fahm-1/src -isystem C:/msys64/mingw64/include/SDL2 -O3 -g -o CMakeFiles\\Fahm.dir\\src\\EntitySerializer.cpp.obj -c C:\\Users\\on3sn\\OneDrive\\Desktop\\Fahm-1\\src\\EntitySerializer.cpp",
+  "file": "C:\\Users\\on3sn\\OneDrive\\Desktop\\Fahm-1\\src\\EntitySerializer.cpp"
+},
+{
+  "directory": "C:/Users/on3sn/OneDrive/Desktop/Fahm-1/build",
   "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Users/on3sn/OneDrive/Desktop/Fahm-1/include -IC:/Users/on3sn/OneDrive/Desktop/Fahm-1/src -isystem C:/msys64/mingw64/include/SDL2 -O3 -g -o CMakeFiles\\Fahm.dir\\src\\EventQueue.cpp.obj -c C:\\Users\\on3sn\\OneDrive\\Desktop\\Fahm-1\\src\\EventQueue.cpp",
   "file": "C:\\Users\\on3sn\\OneDrive\\Desktop\\Fahm-1\\src\\EventQueue.cpp"
 },
@@ -73,6 +78,11 @@
   "directory": "C:/Users/on3sn/OneDrive/Desktop/Fahm-1/build",
   "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Users/on3sn/OneDrive/Desktop/Fahm-1/include -IC:/Users/on3sn/OneDrive/Desktop/Fahm-1/src -isystem C:/msys64/mingw64/include/SDL2 -O3 -g -o CMakeFiles\\Fahm.dir\\src\\Tilemap.cpp.obj -c C:\\Users\\on3sn\\OneDrive\\Desktop\\Fahm-1\\src\\Tilemap.cpp",
   "file": "C:\\Users\\on3sn\\OneDrive\\Desktop\\Fahm-1\\src\\Tilemap.cpp"
+},
+{
+  "directory": "C:/Users/on3sn/OneDrive/Desktop/Fahm-1/build",
+  "command": "C:\\msys64\\mingw64\\bin\\g++.exe -IC:/Users/on3sn/OneDrive/Desktop/Fahm-1/include -IC:/Users/on3sn/OneDrive/Desktop/Fahm-1/src -isystem C:/msys64/mingw64/include/SDL2 -O3 -g -o CMakeFiles\\Fahm.dir\\src\\TilemapLoader.cpp.obj -c C:\\Users\\on3sn\\OneDrive\\Desktop\\Fahm-1\\src\\TilemapLoader.cpp",
+  "file": "C:\\Users\\on3sn\\OneDrive\\Desktop\\Fahm-1\\src\\TilemapLoader.cpp"
 },
 {
   "directory": "C:/Users/on3sn/OneDrive/Desktop/Fahm-1/build",

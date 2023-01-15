@@ -79,15 +79,11 @@ struct Entity
 
         // Components
 
-        components = e.components;
-
-        // for(Component* c : e.components)
-        // {
-        //     Component* copy_c = c->clone();
-
-        //     components.push_back(copy_c);
-        //     component_names.emplace(copy_c->name);
-        // }
+        for(std::map<std::string, Component*>::const_iterator it = 
+            e.components.begin(); it != e.components.end(); it++)
+        {
+            components[it->first] = it->second->clone();
+        }
 
         // Scripts
 
@@ -316,7 +312,7 @@ struct compare_entity_priority
         //     static_cast<SpriteComponent*>(e_2->get_component(
         //         "SpriteComponent"));
 
-        return s_component_1->priority > s_component_2->priority;
+        return s_component_1->priority < s_component_2->priority;
     }
 };
 
@@ -388,6 +384,7 @@ public:
             EntityTracker::entities.push_back(e);
         }
 
+        e->get_component<TransformComponent>()->set_position(x, y);
         e->entity_handler = this;
         entity_positions[{x, y}].push_back(e);
         sort_entities_at_position(x, y);
@@ -398,8 +395,14 @@ public:
         entity_positions[{x, y}].sort(compare_entity_priority());
     }
 
-    bool remove_entity(Entity* e, int x, int y)
+    bool remove_entity(Entity* e)
     {
+        TransformComponent* e_targ_t = 
+            e->get_component<TransformComponent>();
+
+        int x = e_targ_t->x_pos;
+        int y = e_targ_t->y_pos;
+
         if(e->scripts.size() > 0)
         {
             EntityTracker::remove_entity(e);
@@ -418,6 +421,7 @@ public:
                 }
             }
         }
+
         return false;
     }
 
@@ -439,11 +443,11 @@ public:
 
 };
 
-static Entity* create_generic_entity(std::string name, int x_pos, int y_pos,
-    TileID tile_id, int rendering_priority, bool add_collider)
+static Entity* create_generic_entity(std::string name, TileID tile_id, 
+    int rendering_priority, bool add_collider)
 {
     Entity* e = new Entity(name);
-    e->add_component<TransformComponent>(x_pos, y_pos);
+    e->add_component<TransformComponent>(0, 0);
     e->add_component<SpriteComponent>(tile_id, rendering_priority);
     
     if(add_collider)

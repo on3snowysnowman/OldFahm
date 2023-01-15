@@ -41,7 +41,7 @@ public:
     bool contains(int c);
 
     void load_font(const char* path);
-    void add(int symbol, int x_pos, int y_pos, std::string color);
+    void add(int tile_id, int x_pos, int y_pos, std::string color);
     void add(DisplayCharacter display_char, int x_pos, int y_pos);
     void draw();
     void clear();

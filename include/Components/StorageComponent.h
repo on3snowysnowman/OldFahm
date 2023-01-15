@@ -6,6 +6,7 @@
 #include "SpriteComponent.h"
 #include "../Entity.h"
 #include "Text.h"
+#include "EntitySerializer.h"
 
 struct StorageComponent : public Component
 {
@@ -22,6 +23,36 @@ struct StorageComponent : public Component
     {
         max_entities = _max_entities;
     }
+
+    Component* clone() override
+    {
+        return new StorageComponent(max_entities);
+    }
+
+    nlohmann::json serialize() override
+    {
+        nlohmann::json save_json;
+
+ 
+        // Name
+
+        save_json["name"] = name();
+        save_json["max_entities"] = max_entities;
+
+        // Components
+
+        nlohmann::json entities = nlohmann::json::array();
+
+        for(Entity* e : stored_entities)
+        {
+            entities.push_back(EntitySerializer::
+                serialize_entity(e));
+        }
+
+        save_json["entities"] = entities;
+
+        return save_json;
+    }   
 
     static std::string name()
     {

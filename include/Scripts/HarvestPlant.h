@@ -42,9 +42,7 @@ struct HarvestPlant : public Script
 
             if(e->has_tag("HARVESTABLE"))
             {
-                entity->entity_handler->remove_entity(e, t_comp->x_pos, 
-                    t_comp->y_pos);
-
+                entity->entity_handler->remove_entity(e);
                 s_comp->add_entity(e);
                 return true;
             }

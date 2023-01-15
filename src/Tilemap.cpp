@@ -1,5 +1,7 @@
 #include <algorithm>
+#include <fstream>
 
+#include "Debug.h"
 #include "Tilemap.h"
 #include "Components/TransformComponent.h"
 #include "Components/SpriteComponent.h"
@@ -61,6 +63,36 @@ Tilemap::~Tilemap()
 
 // Public Members
 
+void Tilemap::_output_tilemap_to_file(const char* path)
+{
+    std::fstream file_stream;
+
+    file_stream.open(path, std::ios::out);
+
+    if(file_stream.is_open())
+    {
+        for(std::pair<std::pair<int,int>, std::list<Entity*>> _pair : 
+            entity_handler->get_all_entities())
+        {
+            for(Entity* e : _pair.second)
+            {
+                TransformComponent* e_t_comp = 
+                    e->get_component<TransformComponent>();
+
+                file_stream << '(' << _pair.first.first << ", " << 
+                    _pair.first.second << "): " << e->name << 
+                    " -> T Component(" << e_t_comp->x_pos << ", "
+                    << e_t_comp->y_pos << ")\n";
+            }
+        }
+
+        file_stream.close();
+    }
+
+    file_stream.clear();
+
+}
+
 void Tilemap::update()
 {
     entity_handler->update();
@@ -71,11 +103,6 @@ void Tilemap::add_entity(Entity* e, int x, int y)
     if(!e->has_component<TransformComponent>())
     {
         e->add_component<TransformComponent>(x, y);
-    }
-
-    else
-    {
-        e->get_component<TransformComponent>()->set_position(x, y);
     }
     
     entity_handler->add_entity(e, x, y);
@@ -89,18 +116,7 @@ void Tilemap::add_copy_entity(Entity* e, int x, int y)
 
 void Tilemap::remove_entity(Entity* e)
 {
-    if(!e->has_component<TransformComponent>())
-    {
-        Debug::log("[ERR] Tilemap.remove_entity -> Entity does not have"
-            "required Transform Component");
-        exit(0);
-    }
-
-    TransformComponent* t_component = 
-        e->get_component<TransformComponent>();
-
-    if(!entity_handler->remove_entity(e, t_component->x_pos, 
-        t_component->y_pos))
+    if(!entity_handler->remove_entity(e))
     {
         std::string message = "[ERR] Tilemap.remove_entity(Entity* e) where" 
             "\"e\" is" + e->name +  "-> Could not remove entity";
@@ -108,6 +124,34 @@ void Tilemap::remove_entity(Entity* e)
         Debug::log(message);
         exit(0);
     }
+}
+
+void Tilemap::remove_entity_by_name_at_pos(std::string name, int x, int y)
+{
+    std::list<Entity*> entities_at_pos = 
+        entity_handler->get_entities_at_position(x, y);
+
+    for(std::list<Entity*>::iterator it = entities_at_pos.begin(); 
+        it != entities_at_pos.end(); it++)
+    {
+        if((*it)->name == name)
+        {
+            entity_handler->remove_entity((*it));
+            return;
+        }
+    }
+
+    std::string message = "[WAR] Tilemap.remove_entity_by_name_at_pos"
+        "(std::string name, int x, int y) where \"name\" == " + name +
+        ", \"x\" = " + std::to_string(x) + "\"y\" = " + std::to_string(y)
+        + " -> Could not find specified entity at position";
+
+    Debug::log(message);
+}
+
+void Tilemap::find_and_remove_entity_by_name(std::string name)
+{
+
 }
 
 void Tilemap::fill_tilemap(Entity* e)
@@ -157,10 +201,10 @@ std::vector<TileID> Tilemap::get_display(int start_x, int start_y,
             SpriteComponent* s_component = 
                 entities_at_position.front() ->
                 get_component<SpriteComponent>();
-            visible_tiles.push_back(s_component->symbol);
+            visible_tiles.push_back(s_component->tile_id);
 
             // visible_characters.push_back(DisplayCharacter(
-            //     s_component->symbol, s_component->color
+            //     s_component->tile_id, s_component->color
             // ));
         }
 

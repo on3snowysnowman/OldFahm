@@ -24,6 +24,8 @@ struct Script
         return s_clone; 
     }
 
+    virtual nlohmann::json serialize() {}
+
     static std::string name()
     {
         return "Script";

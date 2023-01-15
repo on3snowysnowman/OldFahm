@@ -28,6 +28,25 @@ struct ColliderComponent: public Component
         return new ColliderComponent(exceptions);
     }
 
+    nlohmann::json serialize() override
+    {
+        nlohmann::json save_json;
+
+        save_json["name"] = name();
+        
+        nlohmann::json exceptions_save_array = nlohmann::json::array();
+
+        for(std::unordered_set<std::string>::iterator it = exceptions.begin();
+            it != exceptions.end(); it++)
+        {
+            exceptions_save_array.push_back(*it);
+        }
+
+        save_json["exceptions"] = exceptions_save_array;
+
+        
+    }
+
     static std::string name()
     {
         return "ColliderComponent";

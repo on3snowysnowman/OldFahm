@@ -70,6 +70,13 @@ build CMakeFiles/Fahm.dir/src/Entity.cpp.obj: CXX_COMPILER__Fahm_Debug C$:/Users
   OBJECT_DIR = CMakeFiles\Fahm.dir
   OBJECT_FILE_DIR = CMakeFiles\Fahm.dir\src
 
+build CMakeFiles/Fahm.dir/src/EntitySerializer.cpp.obj: CXX_COMPILER__Fahm_Debug C$:/Users/on3sn/OneDrive/Desktop/Fahm-1/src/EntitySerializer.cpp || cmake_object_order_depends_target_Fahm
+  DEP_FILE = CMakeFiles\Fahm.dir\src\EntitySerializer.cpp.obj.d
+  FLAGS = -O3 -g
+  INCLUDES = -IC:/Users/on3sn/OneDrive/Desktop/Fahm-1/include -IC:/Users/on3sn/OneDrive/Desktop/Fahm-1/src -isystem C:/msys64/mingw64/include/SDL2
+  OBJECT_DIR = CMakeFiles\Fahm.dir
+  OBJECT_FILE_DIR = CMakeFiles\Fahm.dir\src
+
 build CMakeFiles/Fahm.dir/src/EventQueue.cpp.obj: CXX_COMPILER__Fahm_Debug C$:/Users/on3sn/OneDrive/Desktop/Fahm-1/src/EventQueue.cpp || cmake_object_order_depends_target_Fahm
   DEP_FILE = CMakeFiles\Fahm.dir\src\EventQueue.cpp.obj.d
   FLAGS = -O3 -g
@@ -154,6 +161,13 @@ build CMakeFiles/Fahm.dir/src/Tilemap.cpp.obj: CXX_COMPILER__Fahm_Debug C$:/User
   OBJECT_DIR = CMakeFiles\Fahm.dir
   OBJECT_FILE_DIR = CMakeFiles\Fahm.dir\src
 
+build CMakeFiles/Fahm.dir/src/TilemapLoader.cpp.obj: CXX_COMPILER__Fahm_Debug C$:/Users/on3sn/OneDrive/Desktop/Fahm-1/src/TilemapLoader.cpp || cmake_object_order_depends_target_Fahm
+  DEP_FILE = CMakeFiles\Fahm.dir\src\TilemapLoader.cpp.obj.d
+  FLAGS = -O3 -g
+  INCLUDES = -IC:/Users/on3sn/OneDrive/Desktop/Fahm-1/include -IC:/Users/on3sn/OneDrive/Desktop/Fahm-1/src -isystem C:/msys64/mingw64/include/SDL2
+  OBJECT_DIR = CMakeFiles\Fahm.dir
+  OBJECT_FILE_DIR = CMakeFiles\Fahm.dir\src
+
 build CMakeFiles/Fahm.dir/src/TilemapRenderer.cpp.obj: CXX_COMPILER__Fahm_Debug C$:/Users/on3sn/OneDrive/Desktop/Fahm-1/src/TilemapRenderer.cpp || cmake_object_order_depends_target_Fahm
   DEP_FILE = CMakeFiles\Fahm.dir\src\TilemapRenderer.cpp.obj.d
   FLAGS = -O3 -g
@@ -176,7 +190,7 @@ build CMakeFiles/Fahm.dir/src/TilemapWindow.cpp.obj: CXX_COMPILER__Fahm_Debug C$
 #############################################
 # Link the static library libFahm.a
 
-build libFahm.a: CXX_STATIC_LIBRARY_LINKER__Fahm_Debug CMakeFiles/Fahm.dir/src/AudioHandler.cpp.obj CMakeFiles/Fahm.dir/src/BaseWindow.cpp.obj CMakeFiles/Fahm.dir/src/Entity.cpp.obj CMakeFiles/Fahm.dir/src/EventQueue.cpp.obj CMakeFiles/Fahm.dir/src/Fahm.cpp.obj CMakeFiles/Fahm.dir/src/GameplayMenu.cpp.obj CMakeFiles/Fahm.dir/src/InputHandler.cpp.obj CMakeFiles/Fahm.dir/src/Menu.cpp.obj CMakeFiles/Fahm.dir/src/MenuTools.cpp.obj CMakeFiles/Fahm.dir/src/OJAsciiEngine.cpp.obj CMakeFiles/Fahm.dir/src/PauseMenu.cpp.obj CMakeFiles/Fahm.dir/src/TextHandler.cpp.obj CMakeFiles/Fahm.dir/src/TextureHandler.cpp.obj CMakeFiles/Fahm.dir/src/TileDisplayMenu.cpp.obj CMakeFiles/Fahm.dir/src/Tilemap.cpp.obj CMakeFiles/Fahm.dir/src/TilemapRenderer.cpp.obj CMakeFiles/Fahm.dir/src/TilemapWindow.cpp.obj
+build libFahm.a: CXX_STATIC_LIBRARY_LINKER__Fahm_Debug CMakeFiles/Fahm.dir/src/AudioHandler.cpp.obj CMakeFiles/Fahm.dir/src/BaseWindow.cpp.obj CMakeFiles/Fahm.dir/src/Entity.cpp.obj CMakeFiles/Fahm.dir/src/EntitySerializer.cpp.obj CMakeFiles/Fahm.dir/src/EventQueue.cpp.obj CMakeFiles/Fahm.dir/src/Fahm.cpp.obj CMakeFiles/Fahm.dir/src/GameplayMenu.cpp.obj CMakeFiles/Fahm.dir/src/InputHandler.cpp.obj CMakeFiles/Fahm.dir/src/Menu.cpp.obj CMakeFiles/Fahm.dir/src/MenuTools.cpp.obj CMakeFiles/Fahm.dir/src/OJAsciiEngine.cpp.obj CMakeFiles/Fahm.dir/src/PauseMenu.cpp.obj CMakeFiles/Fahm.dir/src/TextHandler.cpp.obj CMakeFiles/Fahm.dir/src/TextureHandler.cpp.obj CMakeFiles/Fahm.dir/src/TileDisplayMenu.cpp.obj CMakeFiles/Fahm.dir/src/Tilemap.cpp.obj CMakeFiles/Fahm.dir/src/TilemapLoader.cpp.obj CMakeFiles/Fahm.dir/src/TilemapRenderer.cpp.obj CMakeFiles/Fahm.dir/src/TilemapWindow.cpp.obj
   LANGUAGE_COMPILE_FLAGS = -O3 -g
   OBJECT_DIR = CMakeFiles\Fahm.dir
   POST_BUILD = cd .

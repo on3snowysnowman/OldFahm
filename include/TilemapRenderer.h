@@ -26,7 +26,7 @@ public:
 private:
 
     int tile_size; 
-    int tile_size_modifier = 2;
+    int tile_size_modifier = 3;
 
     int num_tiles_per_row_in_texture;
 

@@ -7,24 +7,36 @@
 
 struct SpriteComponent : public Component
 {
-    TileID symbol;
+    TileID tile_id;
     int priority;
     
     SpriteComponent()
     {
-        symbol = NO_ID;
+        tile_id = NO_ID;
         priority = -1;
     }
 
-    SpriteComponent(TileID _symbol, int _priority) 
+    SpriteComponent(TileID _tile_id, int _priority) 
     {
-        symbol = _symbol;
+        tile_id = _tile_id;
         priority = _priority;
     }
 
     Component* clone() override
     {
-        return new SpriteComponent(symbol, priority);
+        return new SpriteComponent(tile_id, priority);
+    }
+
+    nlohmann::json serialize() override
+    {
+        nlohmann::json save_json;
+
+        save_json["name"] = name();
+        save_json["tile_id"] = tile_id;
+        save_json["priority"] = priority;
+
+        return save_json;
+
     }
 
     static std::string name()

@@ -9,6 +9,7 @@ add_library(Fahm
     src/AudioHandler.cpp
     src/BaseWindow.cpp
     src/Entity.cpp
+    src/EntitySerializer.cpp
     src/EventQueue.cpp
     src/Fahm.cpp
     src/GameplayMenu.cpp
@@ -21,6 +22,7 @@ add_library(Fahm
     src/TextureHandler.cpp
     src/TileDisplayMenu.cpp
     src/Tilemap.cpp
+    src/TilemapLoader.cpp
     src/TilemapRenderer.cpp
     src/TilemapWindow.cpp
 )

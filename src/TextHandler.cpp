@@ -54,9 +54,9 @@ void TextHandler::load_font(const char* path)
     }
 }
 
-void TextHandler::add(int symbol, int x_pos, int y_pos, std::string color)
+void TextHandler::add(int tile_id, int x_pos, int y_pos, std::string color)
 {
-    content[{x_pos, y_pos}] = DisplayCharacter(symbol, color);
+    content[{x_pos, y_pos}] = DisplayCharacter(tile_id, color);
 }
 
 void TextHandler::add(DisplayCharacter display_char, int x_pos, int y_pos)
@@ -73,7 +73,7 @@ void TextHandler::draw()
     {
         SDL_Rect src, dest;
 
-        int c = it->second.symbol;
+        int c = it->second.tile_id;
 
         src.x = character_data[std::to_string(c)].src_x;
         src.y = character_data[std::to_string(c)].src_y;

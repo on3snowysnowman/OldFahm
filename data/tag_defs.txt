@@ -4,5 +4,8 @@ NON_TRAVERSABLE: No Entity can move to this tile when this tag is present
     here. This tag is used for entities such as the Edge of Map collider, to 
     prevent entities from being able to move to tiles outside of the tilemap
 
+HARVESTABLE: This entity is 'harvestable', and can be harvested to give the player 
+    an item in their inventory
+
 PLAYER: The Player controls this entity and its actions are tied to this entity
 

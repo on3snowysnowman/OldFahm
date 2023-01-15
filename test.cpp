@@ -1,43 +1,53 @@
 #define SDL_MAIN_HANDLED
 
 #include <SDL2/SDL.h>
-#include <SDL2/SDL_mixer.h>
-#include <iostream>
 
-int main() {
-  // Initialize SDL
-  if (SDL_Init(SDL_INIT_AUDIO) < 0) {
-    std::cerr << "Error initializing SDL: " << SDL_GetError() << '\n';
-    return 1;
-  }
+const int WINDOW_WIDTH = 640;
+const int WINDOW_HEIGHT = 480;
 
-  // Initialize SDL_mixer
-  if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
-    std::cerr << "Error initializing SDL_mixer: " << Mix_GetError() << '\n';
-    SDL_Quit();
-    return 1;
-  }
+int main(int argc, char* argv[]) {
+  SDL_Init(SDL_INIT_VIDEO);
+  SDL_Window* window = SDL_CreateWindow("Carrot", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
+  SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 
-  // Load a WAV file
-  Mix_Chunk* sound = Mix_LoadWAV("assets/sound/Snap.wav");
-  if (!sound) {
-    std::cerr << "Error loading WAV file: " << Mix_GetError() << '\n';
-    Mix_CloseAudio();
-    SDL_Quit();
-    return 1;
-  }
+  SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);  // Set the render draw color to green
 
-  // Play the sound on channel 0
-  Mix_PlayChannel(0, sound, 0);
+  // Draw the top of the carrot
+  SDL_Rect topRect;
+  topRect.x = WINDOW_WIDTH / 2 - 50;
+  topRect.y = WINDOW_HEIGHT / 2 - 150;
+  topRect.w = 100;
+  topRect.h = 100;
+  SDL_RenderFillRect(renderer, &topRect);
 
-  // Wait until the sound finishes playing
-  while (Mix_Playing(0)) {
-    SDL_Delay(100);
-  }
+  // Draw the middle of the carrot
+  SDL_SetRenderDrawColor(renderer, 255, 165, 0, 255);  // Set the render draw color to orange
+  SDL_Rect middleRect;
+  middleRect.x = WINDOW_WIDTH / 2 - 75;
+  middleRect.y = WINDOW_HEIGHT / 2 - 50;
+  middleRect.w = 150;
+  middleRect.h = 150;
+  SDL_RenderFillRect(renderer, &middleRect);
 
-  // Clean up
-  Mix_FreeChunk(sound);
-  Mix_CloseAudio();
+  // Draw the bottom of the carrot
+  SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);  // Set the render draw color to red
+  SDL_Rect bottomRect;
+  bottomRect.x = WINDOW_WIDTH / 2 - 100;
+  bottomRect.y = WINDOW_HEIGHT / 2;
+  bottomRect.w = 200;
+  bottomRect.h = 100;
+  SDL_RenderFillRect(renderer, &bottomRect);
+
+  // Draw the point of the carrot
+  SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);  // Set the render draw color to red
+  SDL_RenderDrawLine(renderer, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 50, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2 + 75);
+
+  SDL_RenderPresent(renderer);
+
+  SDL_Delay(3000);  // Wait for 3 seconds before closing the window
+
+  SDL_DestroyRenderer(renderer);
+  SDL_DestroyWindow(window);
   SDL_Quit();
 
   return 0;
